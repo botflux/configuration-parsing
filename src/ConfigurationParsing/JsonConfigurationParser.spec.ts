@@ -25,7 +25,7 @@ describe('JsonConfigurationParser', function () {
         expect(shouldThrow).toThrow(
             `Something went wrong while parsing a json configuration. ` +
             `Are you that the configuration can be parsed? ` +
-            `Inner message: "SyntaxError: Unexpected token h in JSON at position 1".`
+            `Inner message: "Unexpected token h in JSON at position 1".`
         )
     })
 })
