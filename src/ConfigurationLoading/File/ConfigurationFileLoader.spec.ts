@@ -1,6 +1,6 @@
 import path from 'path'
 import {configurationFileLoader} from './ConfigurationFileLoader'
-import {ConfigurationLoadingError} from './LoadableConfiguration'
+import {ConfigurationLoadingError} from '../LoadableConfiguration'
 import fs from 'fs'
 
 describe('ConfigurationFileLoader', function () {

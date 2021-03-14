@@ -1,5 +1,14 @@
 import Toml from 'toml'
-import {ConfigurationParsingError, ParsableConfiguration} from './ParsableConfiguration'
+import {ConfigurationParsingError, ParsableConfiguration} from '../ParsableConfiguration'
+
+const isToml = (rawConfiguration: string) => {
+    try {
+        Toml.parse(rawConfiguration)
+        return true
+    } catch (e) {
+        return false
+    }
+}
 
 class TomlConfigurationParser implements ParsableConfiguration {
     parse(rawConfiguration: string): any {
@@ -12,6 +21,10 @@ class TomlConfigurationParser implements ParsableConfiguration {
                 `Inner message: "${error.message}".`
             )
         }
+    }
+
+    supports(rawConfiguration: string): boolean {
+        return isToml(rawConfiguration);
     }
 }
 

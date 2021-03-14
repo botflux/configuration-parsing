@@ -1,4 +1,13 @@
-import {ConfigurationParsingError, ParsableConfiguration} from './ParsableConfiguration'
+import {ConfigurationParsingError, ParsableConfiguration} from '../ParsableConfiguration'
+
+const isJson = (rawConfiguration: string) => {
+    try {
+        JSON.parse(rawConfiguration)
+        return true
+    } catch (e) {
+        return false
+    }
+}
 
 class JsonConfigurationParser implements ParsableConfiguration {
     parse(rawConfiguration: string): any {
@@ -11,6 +20,10 @@ class JsonConfigurationParser implements ParsableConfiguration {
                 `Inner message: "${error.message}".`
             )
         }
+    }
+
+    supports(rawConfiguration: string): boolean {
+        return isJson(rawConfiguration);
     }
 }
 

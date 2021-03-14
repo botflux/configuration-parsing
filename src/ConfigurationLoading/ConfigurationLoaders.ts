@@ -1,4 +1,4 @@
-import {configurationFileLoader} from './ConfigurationFileLoader'
+import {configurationFileLoader} from './File/ConfigurationFileLoader'
 
 export const loaders = {
     file: configurationFileLoader

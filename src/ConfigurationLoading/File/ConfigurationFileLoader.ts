@@ -1,5 +1,5 @@
 import fs from 'fs'
-import {ConfigurationLoadingError, LoadableConfiguration} from './LoadableConfiguration'
+import {ConfigurationLoadingError, LoadableConfiguration} from '../LoadableConfiguration'
 
 export type FileLoaderOptions = {
     fileLocation: string,

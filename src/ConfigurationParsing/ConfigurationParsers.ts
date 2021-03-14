@@ -1,6 +1,6 @@
-import {jsonConfigurationParser} from './JsonConfigurationParser'
-import {tomlConfigurationParser} from './TomlConfigurationParser'
-import {yamlConfigurationParser} from './YamlConfigurationParser'
+import {jsonConfigurationParser} from './Json/JsonConfigurationParser'
+import {tomlConfigurationParser} from './Toml/TomlConfigurationParser'
+import {yamlConfigurationParser} from './Yaml/YamlConfigurationParser'
 
 export const parsers = {
     json: jsonConfigurationParser,

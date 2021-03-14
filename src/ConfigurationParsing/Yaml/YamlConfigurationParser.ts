@@ -1,5 +1,14 @@
 import Yaml from 'yaml'
-import {ConfigurationParsingError, ParsableConfiguration} from './ParsableConfiguration'
+import {ConfigurationParsingError, ParsableConfiguration} from '../ParsableConfiguration'
+
+const isYaml = (rawConfiguration: string) => {
+    try {
+        Yaml.parse(rawConfiguration)
+        return true
+    } catch (e) {
+        return false
+    }
+}
 
 class YamlConfigurationParser implements ParsableConfiguration {
     parse(rawConfiguration: string): any {
@@ -12,6 +21,10 @@ class YamlConfigurationParser implements ParsableConfiguration {
                 `Inner message: "${error.message}".`
             )
         }
+    }
+
+    supports(rawConfiguration: string): boolean {
+        return isYaml(rawConfiguration);
     }
 }
 

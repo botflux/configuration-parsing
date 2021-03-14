@@ -3,6 +3,12 @@
  */
 export interface ParsableConfiguration {
     parse(rawConfiguration: string): any
+
+    /**
+     * Returns true if the configuration can be parsed.
+     * @param rawConfiguration
+     */
+    supports(rawConfiguration: string): boolean
 }
 
 /**
