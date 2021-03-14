@@ -12,9 +12,9 @@ describe('EnvironmentConfigurationLoader', function () {
         const promise = loader.load()
 
         // Assert
-        await expect(promise).resolves.toEqual(JSON.stringify({
+        await expect(promise).resolves.toEqual({
             HELLO: 'world',
             FOO: 'bar'
-        }))
+        })
     })
 })

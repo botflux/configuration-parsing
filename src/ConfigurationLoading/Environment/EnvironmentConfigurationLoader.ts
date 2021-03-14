@@ -1,16 +1,16 @@
-import {LoadableConfiguration} from '../LoadableConfiguration'
+import {AlreadyParsedLoadableConfiguration} from '../LoadableConfiguration'
 
 export type ProcessEnv = {
     [key: string]: string | undefined
 }
 
-class EnvironmentConfigurationLoader implements LoadableConfiguration {
+class EnvironmentConfigurationLoader implements AlreadyParsedLoadableConfiguration<ProcessEnv> {
     constructor(private readonly env: ProcessEnv = process.env) {}
 
-    load(): Promise<string> {
-        return Promise.resolve(JSON.stringify(this.env));
+    load(): Promise<ProcessEnv> {
+        return Promise.resolve(this.env);
     }
 }
 
-export const configurationEnvironmentLoader = (env: ProcessEnv = process.env): LoadableConfiguration =>
+export const configurationEnvironmentLoader = (env: ProcessEnv = process.env): AlreadyParsedLoadableConfiguration<ProcessEnv> =>
     new EnvironmentConfigurationLoader(env)
