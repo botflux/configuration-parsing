@@ -54,4 +54,26 @@ describe('ConfigurationFileLoader', function () {
             `The file at ${absolutePath} can't be read. Are you the read access was given?`
         ))
     })
+
+    it('should reject when read file rejects', async function () {
+        // Arrange
+        const dependencies = {
+            readFile: () => Promise.reject(new Error(`Error`)),
+            access: () => Promise.resolve(),
+            exists: () => true
+        }
+        const path = 'fake-file.txt'
+        const loader = configurationFileLoader({
+            fileLocation: path
+        }, dependencies)
+
+        // Act
+        const promise = loader.load()
+
+        // Assert
+        await expect(promise).rejects.toEqual(new ConfigurationLoadingError(
+            `Something went wrong while loading a configuration file (fake-file.txt). ` +
+            `Error`
+        ))
+    })
 })
