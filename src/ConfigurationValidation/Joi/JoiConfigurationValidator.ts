@@ -1,7 +1,7 @@
-import {ConfigurationValidationError, ValidableConfiguration} from '../ValidableConfiguration'
+import {ConfigurationValidationError, ValidatableConfiguration} from '../ValidatableConfiguration'
 import Joi from 'joi'
 
-class JoiConfigurationValidation<TConfiguration> implements ValidableConfiguration<TConfiguration> {
+class JoiConfigurationValidation<TConfiguration> implements ValidatableConfiguration<TConfiguration> {
     constructor(private readonly joiObjectSchema: Joi.ObjectSchema) {}
 
     validate(unvalidatedConfiguration: unknown): Promise<TConfiguration> {

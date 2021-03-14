@@ -1,7 +1,7 @@
 /**
- * A ValidableConfiguration is able to validate a piece of configuration.
+ * A ValidatableConfiguration is able to validate a piece of configuration.
  */
-export interface ValidableConfiguration<TConfiguration> {
+export interface ValidatableConfiguration<TConfiguration> {
     validate(unvalidatedConfiguration: unknown): Promise<TConfiguration>;
 }
 

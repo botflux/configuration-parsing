@@ -1,6 +1,6 @@
 import {joiConfigurationValidator} from './JoiConfigurationValidator'
 import Joi from 'joi'
-import {ConfigurationValidationError} from '../ValidableConfiguration'
+import {ConfigurationValidationError} from '../ValidatableConfiguration'
 
 describe('JoiConfigurationValidation', function () {
     it('should validate configuration using joi', async function () {
