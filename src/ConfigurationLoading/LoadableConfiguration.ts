@@ -10,6 +10,6 @@ export interface LoadableConfiguration {
  */
 export class ConfigurationLoadingError extends Error {
     constructor(message: string) {
-        super(message);
+        super(message || 'Something went wrong while loading a configuration.');
     }
 }

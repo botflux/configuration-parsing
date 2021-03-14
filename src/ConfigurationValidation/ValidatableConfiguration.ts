@@ -7,6 +7,6 @@ export interface ValidatableConfiguration<TConfiguration> {
 
 export class ConfigurationValidationError extends Error {
     constructor(message: string) {
-        super(message)
+        super(message || 'Something went wrong while validating this configuration.')
     }
 }

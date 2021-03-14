@@ -16,6 +16,6 @@ export interface ParsableConfiguration {
  */
 export class ConfigurationParsingError extends Error {
     constructor(message: string) {
-        super(message);
+        super(message || 'Something went wrong while parsing this configuration.');
     }
 }
