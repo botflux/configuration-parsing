@@ -6,3 +6,5 @@ export * from './ConfigurationValidation/ValidatableConfiguration'
 
 export * from './ConfigurationLoading/LoadableConfiguration'
 export * from './ConfigurationLoading/ConfigurationLoaders'
+
+export * from './Compose'
