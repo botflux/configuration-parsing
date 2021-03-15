@@ -28,7 +28,7 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
-    - run: COVERALLS_REPO_TOKEN=${{COVERALLS_KEY}} npm run test:coverage
+    - run: npm run test:coverage
 #    - name: Coveralls
 #      uses: coverallsapp/github-action@master
 #      with:
