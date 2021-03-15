@@ -1,4 +1,4 @@
-import {AlreadyParsedLoadableConfiguration, LoadableConfiguration} from './ConfigurationLoading/LoadableConfiguration'
+import {ParsedLoadableConfiguration, LoadableConfiguration} from './ConfigurationLoading/LoadableConfiguration'
 import {ValidatableConfiguration} from './ConfigurationValidation/ValidatableConfiguration'
 import {ParsableConfiguration} from './ConfigurationParsing/ParsableConfiguration'
 
@@ -10,9 +10,9 @@ export interface ComposedConfigurationFactory<TConfiguration> {
     create(): Promise<TConfiguration>
 }
 
-class ParsedLoadableConfigurationFactory<TConfiguration> implements ComposedConfigurationFactory<TConfiguration> {
+class ParsedLoadableConfigurationFactory<TConfiguration, TParsedConfiguration> implements ComposedConfigurationFactory<TConfiguration> {
     constructor(private readonly validatable: ValidatableConfiguration<TConfiguration>,
-                private readonly parsable: AlreadyParsedLoadableConfiguration<TConfiguration>) {}
+                private readonly parsable: ParsedLoadableConfiguration<TParsedConfiguration>) {}
 
     create(): Promise<TConfiguration> {
         return this.parsable.load()
@@ -33,9 +33,9 @@ class LoadableConfigurationFactory<TConfiguration> implements ComposedConfigurat
     }
 }
 
-export const fromParsedLoadable = <TConfiguration> (parsable: AlreadyParsedLoadableConfiguration<TConfiguration>): WithValidatableBuildable<TConfiguration> => ({
-    validatingWith: (validatable: ValidatableConfiguration<TConfiguration>) =>
-        new ParsedLoadableConfigurationFactory<TConfiguration>(validatable, parsable)
+export const fromParsedLoadable = <TParsedConfiguration, TOutputConfiguration extends TParsedConfiguration> (parsable: ParsedLoadableConfiguration<TParsedConfiguration>): WithValidatableBuildable<TOutputConfiguration> => ({
+    validatingWith: (validatable: ValidatableConfiguration<TOutputConfiguration>) =>
+        new ParsedLoadableConfigurationFactory<TOutputConfiguration, TParsedConfiguration>(validatable, parsable)
 })
 
 interface WithParsable<TConfiguration> {

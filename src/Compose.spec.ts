@@ -12,8 +12,9 @@ describe('Compose', function () {
     describe('fromAlreadyParsedLoadableConfiguration', function () {
         it('should compose and load configuration components', async function () {
             // Arrange
+            type Configuration = { HELLO: string }
             const loader = configurationEnvironmentLoader({ HELLO: 'world' })
-            const validator = joiConfigurationValidator<ProcessEnv>(Joi.object({
+            const validator = joiConfigurationValidator<Configuration>(Joi.object({
                 HELLO: Joi.string()
             }))
             const composed = fromParsedLoadable(loader)
