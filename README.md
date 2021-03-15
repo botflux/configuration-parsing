@@ -1,3 +1,9 @@
+[![Build Status](https://travis-ci.com/botflux/configuration-parsing.svg?branch=main)](https://travis-ci.com/botflux/configuration-parsing)
+[![Coverage Status](https://coveralls.io/repos/github/botflux/configuration-parsing/badge.svg?branch=main)](https://coveralls.io/github/botflux/configuration-parsing?branch=main)
+[![GitHub issues](https://img.shields.io/github/issues/botflux/configuration-parsing.svg)](https://GitHub.com/botflux/configuration-parsing/issues/)
+[![GitHub license](https://img.shields.io/github/license/botflux/configuration-parsing.svg)](https://github.com/botflux/configuration-parsing/blob/main/LICENSE)
+
+
 # Configuration parsing
 
 A package that helps manage the loading, parsing, validation of your configuration.
