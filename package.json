@@ -7,8 +7,7 @@
     "build": "tsc",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "mkdir -p coverage && jest --coverage --coverageReporters=text-lcov >> ./coverage/lcov.info",
-    "test:coverage:clean": "rm -rf coverage"
+    "test:coverage": "jest --coverage --coverageReporters=text-lcov >> ./lcov.info"
   },
   "repository": {
     "type": "git",
