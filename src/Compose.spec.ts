@@ -17,11 +17,11 @@ describe('Compose', function () {
             const validator = joiConfigurationValidator<Configuration>(Joi.object({
                 HELLO: Joi.string()
             }))
-            const composed = fromParsedLoadable(loader)
+            const composed = fromParsedLoadable<ProcessEnv, Configuration>(loader)
                 .validatingWith(validator)
 
             // Act
-            const promise = composed.create()
+            const promise: Promise<Configuration> = composed.create()
 
             // Assert
             await expect(promise).resolves.toEqual({
@@ -33,19 +33,21 @@ describe('Compose', function () {
     describe('fromLoadable', function () {
         it('should compose and load configuration components', async function () {
             // Arrange
+            type Configuration = { hello: { db: string } }
+
             const loader = configurationFileLoader({ fileLocation: 'testing/config.json' })
             const parser = jsonConfigurationParser()
-            const validator = joiConfigurationValidator(Joi.object({
+            const validator = joiConfigurationValidator<Configuration>(Joi.object({
                 hello: Joi.object({
                     db: Joi.string()
                 })
             }))
-            const composed = fromLoadable(loader)
+            const composed = fromLoadable<Configuration>(loader)
                 .parsingWith(parser)
                 .validatingWith(validator)
 
             // Act
-            const promise = composed.create()
+            const promise: Promise<Configuration> = composed.create()
 
             // Assert
             await expect(promise).resolves.toEqual({
