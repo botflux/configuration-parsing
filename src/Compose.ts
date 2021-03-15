@@ -1,19 +1,25 @@
-import {LoadableConfiguration} from './ConfigurationLoading/LoadableConfiguration'
-import {ParsableConfiguration} from './ConfigurationParsing/ParsableConfiguration'
+import {AlreadyParsedLoadableConfiguration} from './ConfigurationLoading/LoadableConfiguration'
 import {ValidatableConfiguration} from './ConfigurationValidation/ValidatableConfiguration'
 
-/**
- * Create a configuration workflow.
- *
- * @param loadable
- * @param parsable
- * @param validatable
- */
-export const composeWorkflow = <TConfiguration> (
-    loadable: LoadableConfiguration,
-    parsable: ParsableConfiguration,
-    validatable: ValidatableConfiguration<TConfiguration>
-) =>
-    loadable.load()
-        .then(rawConfiguration => parsable.parse(rawConfiguration))
-        .then(parsedConfiguration => validatable.validate(parsedConfiguration))
+export interface WithValidatableBuildable<TConfiguration> {
+    validatingWith(validatable: ValidatableConfiguration<TConfiguration>): ComposedConfigurationFactory<TConfiguration>
+}
+
+export interface ComposedConfigurationFactory<TConfiguration> {
+    create(): Promise<TConfiguration>
+}
+
+class ConfigurationFactory<TConfiguration> implements ComposedConfigurationFactory<TConfiguration> {
+    constructor(private readonly validatable: ValidatableConfiguration<TConfiguration>,
+                private readonly parsable: AlreadyParsedLoadableConfiguration<TConfiguration>) {}
+
+    create(): Promise<TConfiguration> {
+        return this.parsable.load()
+            .then(unvalidatedConfiguration => this.validatable.validate(unvalidatedConfiguration))
+    }
+}
+
+export const fromAlreadyParsableConfiguration = <TConfiguration> (parsable: AlreadyParsedLoadableConfiguration<TConfiguration>): WithValidatableBuildable<TConfiguration> => ({
+    validatingWith: (validatable: ValidatableConfiguration<TConfiguration>) =>
+        new ConfigurationFactory<TConfiguration>(validatable, parsable)
+})
