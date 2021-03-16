@@ -16,10 +16,18 @@ export interface ParsableConfiguration {
  */
 export class ConfigurationParsingError extends Error {
     public readonly parserName: string
+    public readonly innerError: unknown | undefined
 
-    constructor(message: string, parserName: string) {
+    constructor(message: string, parserName: string, innerError?: unknown) {
         super(message || 'Something went wrong while parsing this configuration.');
         this.parserName = parserName
+        this.innerError = innerError
+
+        Object.setPrototypeOf(this, ConfigurationParsingError.prototype)
+    }
+
+    hasInnerError (): boolean {
+        return this.innerError !== undefined && this.innerError !== null
     }
 }
 

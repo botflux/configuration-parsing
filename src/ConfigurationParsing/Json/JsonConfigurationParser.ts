@@ -16,9 +16,9 @@ class JsonConfigurationParser implements ParsableConfiguration {
         } catch (error) {
             throw new ConfigurationParsingError(
                 `Something went wrong while parsing a json configuration. ` +
-                `Are you that the configuration can be parsed? ` +
-                `Inner message: "${error.message}".`,
-                JsonConfigurationParser.name
+                `Are you that the configuration can be parsed? `,
+                JsonConfigurationParser.name,
+                error
             )
         }
     }

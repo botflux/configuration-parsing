@@ -29,7 +29,7 @@ describe('JoiConfigurationValidation', function () {
 
         // Assert
         await expect(promise).rejects.toEqual(new ConfigurationValidationError(
-            `Something went wrong while validating a configuration. Inner error: ""hello" is not allowed"`,
+            `Something went wrong while validating a configuration.`,
             validatorName
         ))
     })

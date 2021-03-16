@@ -23,6 +23,12 @@ export class ConfigurationLoadingError extends Error {
         super(message || 'Something went wrong while loading a configuration.');
         this.loaderName = loaderName
         this.innerError = innerError
+
+        Object.setPrototypeOf(this, ConfigurationLoadingError.prototype);
+    }
+
+    hasInnerError (): boolean {
+        return this.innerError !== undefined && this.innerError !== null
     }
 }
 

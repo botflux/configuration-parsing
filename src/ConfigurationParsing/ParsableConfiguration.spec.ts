@@ -28,4 +28,26 @@ describe('ConfigurationParsingError', function () {
         expect(isError2).toBe(false)
         expect(isError3).toBe(false)
     })
+
+    it('should return true when an error has an inner error', function () {
+        // Arrange
+        const error = new ConfigurationParsingError('', '', new Error(''))
+
+        // Act
+        const hasInnerError = error.hasInnerError()
+
+        // Assert
+        expect(hasInnerError).toBe(true)
+    })
+
+    it('should return false when an error has no inner error', function () {
+        // Arrange
+        const error = new ConfigurationParsingError('', 'A loader')
+
+        // Act
+        const hasInnerError = error.hasInnerError()
+
+        // Assert
+        expect(hasInnerError).toBe(false)
+    })
 })

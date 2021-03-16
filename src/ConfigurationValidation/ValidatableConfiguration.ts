@@ -7,10 +7,18 @@ export interface ValidatableConfiguration<TConfiguration> {
 
 export class ConfigurationValidationError extends Error {
     public readonly validatorName: string
+    public readonly innerError: unknown | undefined
 
-    constructor(message: string, validatorName: string) {
+    constructor(message: string, validatorName: string, innerError?: unknown) {
         super(message || 'Something went wrong while validating this configuration.')
         this.validatorName = validatorName
+        this.innerError = innerError
+
+        Object.setPrototypeOf(this, ConfigurationValidationError.prototype)
+    }
+
+    hasInnerError(): boolean {
+        return this.innerError !== undefined && this.innerError !== null
     }
 }
 

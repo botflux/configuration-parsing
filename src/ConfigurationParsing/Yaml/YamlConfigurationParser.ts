@@ -17,9 +17,9 @@ class YamlConfigurationParser implements ParsableConfiguration {
         } catch (error) {
             throw new ConfigurationParsingError(
                 `Something went wrong while parsing a yaml configuration. ` +
-                `Are you that the configuration can be parsed? ` +
-                `Inner message: "${error.message}".`,
-                YamlConfigurationParser.name
+                `Are you that the configuration can be parsed? `,
+                YamlConfigurationParser.name,
+                error
             )
         }
     }

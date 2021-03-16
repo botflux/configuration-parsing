@@ -25,7 +25,7 @@ describe('TomlConfigurationParser', function () {
         const supports = parser.supports(configuration)
 
         // Assert
-        expect(shouldThrow).toThrow("Something went wrong while parsing the toml configuration. Are you that the configuration can be parsed? Inner message: \"Expected \"=\", [ \\t] or [A-Za-z0-9_\\-] but end of input found.\".")
+        expect(shouldThrow).toThrow("Something went wrong while parsing the toml configuration. Are you that the configuration can be parsed?")
         expect(supports).toBe(false)
     })
 })
