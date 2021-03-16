@@ -23,3 +23,6 @@ export class ConfigurationLoadingError extends Error {
         this.loaderName = loaderName
     }
 }
+
+export const isConfigurationLoadingError = (something: any): something is ConfigurationLoadingError =>
+    something !== undefined && something !== null && typeof something === 'object' && 'loaderName' in something

@@ -6,7 +6,10 @@ export interface ValidatableConfiguration<TConfiguration> {
 }
 
 export class ConfigurationValidationError extends Error {
-    constructor(message: string) {
+    public readonly validatorName: string
+
+    constructor(message: string, validatorName: string) {
         super(message || 'Something went wrong while validating this configuration.')
+        this.validatorName = validatorName
     }
 }

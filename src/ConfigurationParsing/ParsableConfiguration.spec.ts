@@ -1,0 +1,31 @@
+import {ConfigurationParsingError, isConfigurationParsingError} from './ParsableConfiguration'
+
+describe('ConfigurationParsingError', function () {
+    it('should return true when the object is a parsing error', function () {
+        // Arrange
+        const error: any = new ConfigurationParsingError('My error', 'A parser')
+
+        // Act
+        const isError = isConfigurationParsingError(error)
+
+        // Assert
+        expect(isError).toBe(true)
+    })
+
+    it('should return false when the object is not a parsing error', function () {
+        // Arrange
+        const obj: any = {}
+        const str: any = 'foo'
+        const n: any = 12
+
+        // Act
+        const isError1 = isConfigurationParsingError(obj)
+        const isError2 = isConfigurationParsingError(str)
+        const isError3 = isConfigurationParsingError(n)
+
+        // Assert
+        expect(isError1).toBe(false)
+        expect(isError2).toBe(false)
+        expect(isError3).toBe(false)
+    })
+})

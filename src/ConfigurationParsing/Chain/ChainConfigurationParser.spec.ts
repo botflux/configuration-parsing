@@ -1,4 +1,4 @@
-import {chainConfigurationParser} from './ChainConfigurationParser'
+import {chainConfigurationParser, parserName} from './ChainConfigurationParser'
 import {jsonConfigurationParser} from '../Json/JsonConfigurationParser'
 import {tomlConfigurationParser} from '../Toml/TomlConfigurationParser'
 import {ConfigurationParsingError} from '../ParsableConfiguration'
@@ -39,7 +39,7 @@ describe('ChainConfigurationParser', function () {
 
         // Assert
         expect(shouldThrow).toThrow(
-            new ConfigurationParsingError("Something went wrong while parsing a configuration. There is no parser supporting the given configuration.")
+            new ConfigurationParsingError("Something went wrong while parsing a configuration. There is no parser supporting the given configuration.", parserName)
         )
         expect(supportsToml).toBe(false)
     })

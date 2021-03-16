@@ -8,10 +8,13 @@ class JoiConfigurationValidation<TConfiguration> implements ValidatableConfigura
         return this.joiObjectSchema.validateAsync(unvalidatedConfiguration)
             .catch(joiError => Promise.reject(new ConfigurationValidationError(
                 `Something went wrong while validating a configuration. ` +
-                `Inner error: "${joiError.message}"`
+                `Inner error: "${joiError.message}"`,
+                JoiConfigurationValidation.name
             )))
     }
 }
+
+export const validatorName: string = JoiConfigurationValidation.name
 
 export const joiConfigurationValidator = <TConfiguration> (joiObjectSchema: Joi.ObjectSchema) =>
     new JoiConfigurationValidation<TConfiguration>(joiObjectSchema)

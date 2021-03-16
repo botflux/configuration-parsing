@@ -10,7 +10,8 @@ class ChainConfigurationParser implements ParsableConfiguration {
         if (!parsableConfiguration) {
             throw new ConfigurationParsingError(
                 `Something went wrong while parsing a configuration. ` +
-                `There is no parser supporting the given configuration.`
+                `There is no parser supporting the given configuration.`,
+                ChainConfigurationParser.name
             )
         }
 
@@ -22,6 +23,8 @@ class ChainConfigurationParser implements ParsableConfiguration {
             previousValue || currentValue.supports(rawConfiguration), false)
     }
 }
+
+export const parserName: string = ChainConfigurationParser.name
 
 export const chainConfigurationParser = (parsableConfigurations: ParsableConfiguration[]): ParsableConfiguration =>
     new ChainConfigurationParser(parsableConfigurations)

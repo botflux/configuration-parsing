@@ -15,7 +15,13 @@ export interface ParsableConfiguration {
  * Thrown when something went wrong while parsing a configuration.
  */
 export class ConfigurationParsingError extends Error {
-    constructor(message: string) {
+    public readonly parserName: string
+
+    constructor(message: string, parserName: string) {
         super(message || 'Something went wrong while parsing this configuration.');
+        this.parserName = parserName
     }
 }
+
+export const isConfigurationParsingError = (something: any): something is ConfigurationParsingError =>
+    something !== undefined && something !== null && typeof something === 'object' && 'parserName' in something

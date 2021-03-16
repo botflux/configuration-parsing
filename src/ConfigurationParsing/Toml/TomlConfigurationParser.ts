@@ -18,7 +18,8 @@ class TomlConfigurationParser implements ParsableConfiguration {
             throw new ConfigurationParsingError(
                 `Something went wrong while parsing the toml configuration. ` +
                 `Are you that the configuration can be parsed? ` +
-                `Inner message: "${error.message}".`
+                `Inner message: "${error.message}".`,
+                TomlConfigurationParser.name
             )
         }
     }
@@ -27,5 +28,7 @@ class TomlConfigurationParser implements ParsableConfiguration {
         return isToml(rawConfiguration);
     }
 }
+
+export const parserName: string = TomlConfigurationParser.name
 
 export const tomlConfigurationParser = (): ParsableConfiguration => new TomlConfigurationParser()
