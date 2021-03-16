@@ -20,7 +20,8 @@ class ConfigurationFileLoader implements LoadableConfiguration {
         if (!this.dependencies.exists(this.options.fileLocation)) {
             return Promise.reject(new ConfigurationLoadingError(
                 `Something went wrong while loading a configuration file. ` +
-                `The file at ${this.options.fileLocation} doesn't exist. Are you this is the correct path?`
+                `The file at ${this.options.fileLocation} doesn't exist. Are you this is the correct path?`,
+                ConfigurationFileLoader.name
             ))
         }
 
@@ -29,17 +30,21 @@ class ConfigurationFileLoader implements LoadableConfiguration {
         } catch (e) {
             return Promise.reject(new ConfigurationLoadingError(
                 `Something went wrong while loading a configuration file. ` +
-                `The file at ${this.options.fileLocation} can't be read. Are you the read access was given?`
+                `The file at ${this.options.fileLocation} can't be read. Are you the read access was given?`,
+                ConfigurationFileLoader.name
             ))
         }
 
         return this.dependencies.readFile(this.options.fileLocation, 'utf-8')
             .catch(error => Promise.reject(new ConfigurationLoadingError(
                 `Something went wrong while loading a configuration file (${this.options.fileLocation}). ` +
-                error.message
+                error.message,
+                ConfigurationFileLoader.name
             )));
     }
 }
+
+export const loaderName: string = ConfigurationFileLoader.name
 
 export const defaultFileLoaderDependencies = {
     readFile: fs.promises.readFile,

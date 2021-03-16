@@ -16,7 +16,10 @@ export interface ParsedLoadableConfiguration<TConfiguration> {
  * Thrown when something went wrong while loading a configuration.
  */
 export class ConfigurationLoadingError extends Error {
-    constructor(message: string) {
+    public readonly loaderName: string
+
+    constructor(message: string, loaderName: string) {
         super(message || 'Something went wrong while loading a configuration.');
+        this.loaderName = loaderName
     }
 }

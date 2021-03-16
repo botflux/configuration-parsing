@@ -1,5 +1,5 @@
 import path from 'path'
-import {configurationFileLoader} from './ConfigurationFileLoader'
+import {configurationFileLoader, loaderName} from './ConfigurationFileLoader'
 import {ConfigurationLoadingError} from '../LoadableConfiguration'
 import fs from 'fs'
 
@@ -29,7 +29,8 @@ describe('ConfigurationFileLoader', function () {
         // Assert
         await expect(promise).rejects.toEqual(new ConfigurationLoadingError(
             `Something went wrong while loading a configuration file. ` +
-            `The file at a-file-that-does-not-exists.txt doesn't exist. Are you this is the correct path?`
+            `The file at a-file-that-does-not-exists.txt doesn't exist. Are you this is the correct path?`,
+            loaderName
         ))
     })
 
@@ -51,7 +52,8 @@ describe('ConfigurationFileLoader', function () {
         // Assert
         await expect(promise).rejects.toEqual(new ConfigurationLoadingError(
             `Something went wrong while loading a configuration file. ` +
-            `The file at ${absolutePath} can't be read. Are you the read access was given?`
+            `The file at ${absolutePath} can't be read. Are you the read access was given?`,
+            loaderName
         ))
     })
 
@@ -73,7 +75,8 @@ describe('ConfigurationFileLoader', function () {
         // Assert
         await expect(promise).rejects.toEqual(new ConfigurationLoadingError(
             `Something went wrong while loading a configuration file (fake-file.txt). ` +
-            `Error`
+            `Error`,
+            loaderName
         ))
     })
 })
