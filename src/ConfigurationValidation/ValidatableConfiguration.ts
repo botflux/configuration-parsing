@@ -13,3 +13,6 @@ export class ConfigurationValidationError extends Error {
         this.validatorName = validatorName
     }
 }
+
+export const isConfigurationValidationError = (something: any): something is ConfigurationValidationError =>
+    something !== undefined && something !== null && typeof something === 'object' && 'validatorName' in something

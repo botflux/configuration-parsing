@@ -1,7 +1,4 @@
-import {ConfigurationValidationError} from './ValidatableConfiguration'
-
-const isConfigurationValidationError = (something: any): something is ConfigurationValidationError =>
-    something !== undefined && something !== null && typeof something === 'object' && 'validatorName' in something
+import {ConfigurationValidationError, isConfigurationValidationError} from './ValidatableConfiguration'
 
 describe('ConfigurationValidationError', function () {
     it('should return true when giving a ConfigurationValidationError', function () {
