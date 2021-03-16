@@ -50,4 +50,14 @@ describe('ConfigurationValidationError', function () {
         // Assert
         expect(hasInnerError).toBe(false)
     })
+
+    it('should fallback on default message', function () {
+        // Arrange
+
+        // Act
+        const error = new ConfigurationValidationError('', 'validator')
+
+        // Assert
+        expect(error.message).toBe('Something went wrong while validating this configuration.')
+    })
 })

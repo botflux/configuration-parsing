@@ -51,4 +51,15 @@ describe('ConfigurationLoadingError', function () {
         // Assert
         expect(hasInnerError).toBe(false)
     })
+
+    it('should fallback on default error message', function () {
+        // Arrange
+
+        // Act
+        const error = new ConfigurationLoadingError('', 'my loader')
+        const message = error.message
+
+        // Assert
+        expect(message).toBe('Something went wrong while loading a configuration.')
+    })
 })
