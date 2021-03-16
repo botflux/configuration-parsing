@@ -17,10 +17,12 @@ export interface ParsedLoadableConfiguration<TConfiguration> {
  */
 export class ConfigurationLoadingError extends Error {
     public readonly loaderName: string
+    public readonly innerError: unknown | undefined
 
-    constructor(message: string, loaderName: string) {
+    constructor(message: string, loaderName: string, innerError?: unknown) {
         super(message || 'Something went wrong while loading a configuration.');
         this.loaderName = loaderName
+        this.innerError = innerError
     }
 }
 

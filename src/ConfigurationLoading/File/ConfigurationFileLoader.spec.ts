@@ -74,9 +74,9 @@ describe('ConfigurationFileLoader', function () {
 
         // Assert
         await expect(promise).rejects.toEqual(new ConfigurationLoadingError(
-            `Something went wrong while loading a configuration file (fake-file.txt). ` +
-            `Error`,
-            loaderName
+            `Something went wrong while loading a configuration file (fake-file.txt). `,
+            loaderName,
+            new Error(`Error`)
         ))
     })
 })

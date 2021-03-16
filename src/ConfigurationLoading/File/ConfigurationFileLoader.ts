@@ -31,15 +31,16 @@ class ConfigurationFileLoader implements LoadableConfiguration {
             return Promise.reject(new ConfigurationLoadingError(
                 `Something went wrong while loading a configuration file. ` +
                 `The file at ${this.options.fileLocation} can't be read. Are you the read access was given?`,
-                ConfigurationFileLoader.name
+                ConfigurationFileLoader.name,
+                e
             ))
         }
 
         return this.dependencies.readFile(this.options.fileLocation, 'utf-8')
             .catch(error => Promise.reject(new ConfigurationLoadingError(
-                `Something went wrong while loading a configuration file (${this.options.fileLocation}). ` +
-                error.message,
-                ConfigurationFileLoader.name
+                `Something went wrong while loading a configuration file (${this.options.fileLocation}). `,
+                ConfigurationFileLoader.name,
+                error
             )));
     }
 }
