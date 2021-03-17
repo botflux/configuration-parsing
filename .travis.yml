@@ -1,11 +1,19 @@
 language: node_js
 node_js:
-  - 14
-  - 12
-  - 10
-branches:
-  only:
+- 14
+test:
+  branches:
+    only:
     - main
-script:
+  script:
   - npm test
   - npm run test:coverage
+deploy:
+  provider: npm
+  email: victor.mendele68@gmail.com
+  api_key:
+    secure: 0DqxqK92WSPmUFOB/sbl1CgEV6EhVwDett8vlz58Wtxakpm35LtnJN/YtN+T5iQwivLzl3qcDTW3WqNGRsA/wqFsymiVda2jAmNK27+OTm1EIwya3ShOqXDmJY1D1mi0PRWEjoGLGxS0FA4bZl52DRRYiKn8PfKtaDAASFWaLqO9gOne9kb3Ay/dovNXzXfEAcedKjVYBugxJCVlKcXltthES9k/OO59lG9m3OZ4r7qFCdm7/4OVEYF2lNr+0WEzCTKOVNckNfbdB/212+4sD/8tOaj3tQb2wbs9xcX9IX7L6BG+lIYh3IZ7JYbZQWBrKY1HCmOQoen0aLHfu8HleGsE4r1+EWGsM6j1W/ra7HfWu417k7dmBjAg1NaWNB3+C+45jTZh4NMX2lxwKEfhYXune84qhi71SXBo2cRdo9LVITKEWDXWaj6LdjhMp1rn7FlvcyfrM8puFK0pjuxoLtv/Ievflj9iRiUXygvp/N5zZ3v4qTutO6Qk9qyVuo4UU3KdsKtlnP9SOmwK7NbhlcYH0Ddx3fBNAE+qZQRM5rcggVFNne/iSNOI4FX9Ip1Vw8ndUpeDPRssqgeFnLOuC8QdCgUvv4IqAZmz30FGxo1jOBXnHG3hEO3VOYuKI1AY5ba9IAy0ggt1LIsp+pI9Pas42npSFgZm2KZ9FyoMojo=
+  on:
+    tags: true
+    repo: botflux/configuration-parsing
+  skip_cleanup: 'true'
