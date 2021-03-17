@@ -1,10 +1,10 @@
 {
   "name": "configuration-parsing",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A configuration management library",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist && tsc",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --coverageReporters=text-lcov --config=jest.config.js | coveralls"
@@ -36,5 +36,8 @@
     "joi": "^17.4.0",
     "toml": "^3.0.0",
     "yaml": "^1.10.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

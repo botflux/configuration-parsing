@@ -8,5 +8,3 @@ export * from './ConfigurationLoading/LoadableConfiguration'
 export * from './ConfigurationLoading/ConfigurationLoaders'
 
 export * from './Compose'
-
-export * from './ConfigurationParsing/ParsableConfiguration'
