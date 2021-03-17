@@ -6,3 +6,4 @@ jest.config.js
 README.md
 tsconfig.json
 .gitignore
+.idea
