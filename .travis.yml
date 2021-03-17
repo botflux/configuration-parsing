@@ -17,3 +17,6 @@ deploy:
     tags: true
     repo: botflux/configuration-parsing
   skip_cleanup: 'true'
+  branches:
+    only:
+      - /^v\d+\.\d+\.\d+.*$/
