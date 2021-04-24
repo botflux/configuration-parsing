@@ -7,4 +7,6 @@ export * from './ConfigurationValidation/ValidatableConfiguration'
 export * from './ConfigurationLoading/LoadableConfiguration'
 export * from './ConfigurationLoading/ConfigurationLoaders'
 
+export * from './ComposeExtensions/CacheableConfigurationFactory'
+
 export * from './Compose'
