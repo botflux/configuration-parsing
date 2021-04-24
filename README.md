@@ -105,7 +105,7 @@ const parsedYaml = yamlAndJsonParsers.parse(rawYaml)
 
 ```typescript
 import Joi from 'joi'
-import { parsers, loaders, validators, fromLoadable, createCacheableConfigurationFactory } from 'configuration-parsing'
+import { TimeInterval, parsers, loaders, validators, fromLoadable, createCacheableConfigurationFactory } from 'configuration-parsing'
 
 type MyConfiguration = { hello: { db: string } }
 
@@ -130,7 +130,7 @@ const configurationFactory = fromLoadable<MyConfiguration>(fileLoader)
 
 const cacheableConfigurationFactory = createCacheableConfigurationFactory(
     configurationFactory,
-    { reloadAfterMs: 60000 }
+    { reloadAfterMs: TimeInterval.minutes(5) }
 )
 
 // Will load the configuration the first and cache it
