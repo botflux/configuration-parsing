@@ -130,7 +130,7 @@ const configurationFactory = fromLoadable<MyConfiguration>(fileLoader)
 
 const cacheableConfigurationFactory = createCacheableConfigurationFactory(
     configurationFactory,
-    { reloadAfterMs: TimeInterval.minutes(5) }
+    { reloadEvery: TimeInterval.minutes(5) }
 )
 
 // Will load the configuration the first and cache it

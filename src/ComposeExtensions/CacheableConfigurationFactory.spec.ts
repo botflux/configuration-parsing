@@ -14,7 +14,7 @@ describe('#CacheableConfigurationFactory', function () {
         myFactory.create = jest.fn(myFactory.create)
         const cacheableFactory = createCacheableConfigurationFactory(
             myFactory,
-            { reloadAfterMs: TimeInterval.hours(1) },
+            { reloadEvery: TimeInterval.hours(1) },
             () => new Date('2020-06-08 12:56:37')
         )
 
@@ -34,7 +34,7 @@ describe('#CacheableConfigurationFactory', function () {
         myFactory.create = jest.fn(myFactory.create)
         const cacheableFactory = createCacheableConfigurationFactory(
             myFactory,
-            { reloadAfterMs: TimeInterval.hours(1) },
+            { reloadEvery: TimeInterval.hours(1) },
             () => currentTime
         )
 
@@ -55,7 +55,7 @@ describe('#CacheableConfigurationFactory', function () {
         myFactory.create = jest.fn(myFactory.create)
         const cacheableFactory = createCacheableConfigurationFactory(
             myFactory,
-            { reloadAfterMs: TimeInterval.hours(1) },
+            { reloadEvery: TimeInterval.hours(1) },
             () => currentTime
         )
 
