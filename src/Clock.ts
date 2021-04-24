@@ -1,4 +1,4 @@
-type GetCurrentTime = () => Date
+export type GetCurrentTime = () => Date
 
 export interface ClockInterface {
     isBefore(date: Date): boolean
