@@ -55,7 +55,7 @@ const configurationFactory = fromLoadable<MyConfiguration>(fileLoader)
     .parsingWith(parser)
     .validatingWith(validator)
 
-const configuration: MyConfiguration = configurationFactory.create()
+const configuration: MyConfiguration = await configurationFactory.create()
 ```
 
 ### Another usage
@@ -99,6 +99,44 @@ const yamlAndJsonParsers = parsers.chain([ parsers.yaml(), parsers.json() ])
 
 const parsedJson = yamlAndJsonParsers.parse(rawJson)
 const parsedYaml = yamlAndJsonParsers.parse(rawYaml)
+```
+
+### Cached configuration factory
+
+```typescript
+import Joi from 'joi'
+import { parsers, loaders, validators, fromLoadable, createCacheableConfigurationFactory } from 'configuration-parsing'
+
+type MyConfiguration = { hello: { db: string } }
+
+// Creating the different component
+// Loadable are able to load raw piece of configuration.
+const fileLoader = loaders.file({ location: 'testing/configuration.json' })
+
+// Parsable are able to parse raw piece of configuration. 
+const jsonParser = parsers.json()
+
+// Validatable are able to validate parsed piece of configuration.
+const validator = validators.joi<MyConfiguration>(Joi.object({
+    hello: Joi.object({
+        db: Joi.string()
+    })
+}))
+
+// You can compose each component to create a configuration factory.
+const configurationFactory = fromLoadable<MyConfiguration>(fileLoader)
+    .parsingWith(parser)
+    .validatingWith(validator)
+
+const cacheableConfigurationFactory = createCacheableConfigurationFactory(
+    configurationFactory,
+    { reloadAfterMs: 60000 }
+)
+
+// Will load the configuration the first and cache it
+// until the reload time was passed.
+const configuration: MyConfiguration = await cacheableConfigurationFactory.create()
+
 ```
 
 ## Implementing your own loader / parser / validator
