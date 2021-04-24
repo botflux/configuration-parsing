@@ -1,24 +1,25 @@
 import {ComposedConfigurationFactory} from '../Compose'
-import {ClockInterface, createClock, GetCurrentTime} from '../Clock'
 
+type GetCurrentTime = () => Date
 type CacheableConfigurationFactoryOptions = { reloadAfterMs: number }
 
 class CacheableConfigurationFactory<TConfiguration> implements ComposedConfigurationFactory<TConfiguration> {
     private cachedConfiguration?: TConfiguration
+    private lastLoadTime?: Date
 
     constructor(
         private readonly innerFactory: ComposedConfigurationFactory<TConfiguration>,
         private readonly options: CacheableConfigurationFactoryOptions,
-        private readonly clock: ClockInterface,
         private readonly getCurrentTime: GetCurrentTime
     ) {
     }
 
     async create(): Promise<TConfiguration> {
-        const now = this.getCurrentTime()
-        const nextReloadDate = new Date(now.valueOf() + this.options.reloadAfterMs)
+        const lastLoadTime = this.lastLoadTime || this.getCurrentTime()
+        const nextReloadDate = new Date(lastLoadTime.valueOf() + this.options.reloadAfterMs)
 
-        if (this.clock.isBefore(nextReloadDate) || this.cachedConfiguration === undefined) {
+        if (nextReloadDate <= this.getCurrentTime() || this.cachedConfiguration === undefined) {
+            this.lastLoadTime = lastLoadTime
             this.cachedConfiguration = await this.innerFactory.create()
         }
 
@@ -29,7 +30,6 @@ class CacheableConfigurationFactory<TConfiguration> implements ComposedConfigura
 export const createCacheableConfigurationFactory = <TConfiguration>
     (innerFactory: ComposedConfigurationFactory<TConfiguration>,
      options: CacheableConfigurationFactoryOptions,
-     clock: ClockInterface = createClock(() => new Date()),
      getCurrentTime: GetCurrentTime = () => new Date()): ComposedConfigurationFactory<TConfiguration> =>
-        new CacheableConfigurationFactory(innerFactory, options, clock, getCurrentTime)
+        new CacheableConfigurationFactory(innerFactory, options, getCurrentTime)
 
