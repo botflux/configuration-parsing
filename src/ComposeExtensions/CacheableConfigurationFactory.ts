@@ -1,5 +1,5 @@
 import {ComposedConfigurationFactory} from '../Compose'
-import {ClockInterface, GetCurrentTime} from '../Clock'
+import {ClockInterface, createClock, GetCurrentTime} from '../Clock'
 
 type CacheableConfigurationFactoryOptions = { reloadAfterMs: number }
 
@@ -29,6 +29,7 @@ class CacheableConfigurationFactory<TConfiguration> implements ComposedConfigura
 export const createCacheableConfigurationFactory = <TConfiguration>
     (innerFactory: ComposedConfigurationFactory<TConfiguration>,
      options: CacheableConfigurationFactoryOptions,
-     clock: ClockInterface,
-     getCurrentTime: GetCurrentTime): ComposedConfigurationFactory<TConfiguration> =>
+     clock: ClockInterface = createClock(() => new Date()),
+     getCurrentTime: GetCurrentTime = () => new Date()): ComposedConfigurationFactory<TConfiguration> =>
         new CacheableConfigurationFactory(innerFactory, options, clock, getCurrentTime)
+
