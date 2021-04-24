@@ -101,7 +101,7 @@ const parsedJson = yamlAndJsonParsers.parse(rawJson)
 const parsedYaml = yamlAndJsonParsers.parse(rawYaml)
 ```
 
-## Implementing you own loader / parser / validator
+## Implementing your own loader / parser / validator
 
 ### Loaders
 
