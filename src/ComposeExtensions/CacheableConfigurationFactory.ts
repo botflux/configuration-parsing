@@ -1,7 +1,7 @@
 import {ComposedConfigurationFactory} from '../Compose'
 
 type GetCurrentTime = () => Date
-type CacheableConfigurationFactoryOptions = { reloadAfterMs: number }
+export type CacheableConfigurationFactoryOptions = { reloadAfterMs: TimeInterval }
 
 class CacheableConfigurationFactory<TConfiguration> implements ComposedConfigurationFactory<TConfiguration> {
     private cachedConfiguration?: TConfiguration
@@ -16,7 +16,7 @@ class CacheableConfigurationFactory<TConfiguration> implements ComposedConfigura
 
     async create(): Promise<TConfiguration> {
         const lastLoadTime = this.lastLoadTime || this.getCurrentTime()
-        const nextReloadDate = new Date(lastLoadTime.valueOf() + this.options.reloadAfterMs)
+        const nextReloadDate = new Date(lastLoadTime.valueOf() + this.options.reloadAfterMs.getMs())
 
         if (nextReloadDate <= this.getCurrentTime() || this.cachedConfiguration === undefined) {
             this.lastLoadTime = lastLoadTime
@@ -33,3 +33,14 @@ export const createCacheableConfigurationFactory = <TConfiguration>
      getCurrentTime: GetCurrentTime = () => new Date()): ComposedConfigurationFactory<TConfiguration> =>
         new CacheableConfigurationFactory(innerFactory, options, getCurrentTime)
 
+export class TimeInterval {
+    private constructor(private readonly ms: number) {}
+
+    getMs = () => this.ms
+    and = (interval: TimeInterval) => TimeInterval.ms(interval.ms + this.ms)
+
+    static ms = (ms: number) => new TimeInterval(ms)
+    static seconds = (seconds: number) => TimeInterval.ms(seconds * 1000)
+    static minutes = (minutes: number) => TimeInterval.seconds(minutes * 60)
+    static hours = (hours: number) => TimeInterval.minutes(hours * 60)
+}

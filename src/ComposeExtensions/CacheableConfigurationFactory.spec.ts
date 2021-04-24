@@ -1,5 +1,5 @@
 import {ComposedConfigurationFactory} from '../Compose'
-import {createCacheableConfigurationFactory} from './CacheableConfigurationFactory'
+import {createCacheableConfigurationFactory, TimeInterval} from './CacheableConfigurationFactory'
 
 class FakeConfigurationFactory implements ComposedConfigurationFactory<{ hello: string }> {
     create(): Promise<{ hello: string }> {
@@ -14,7 +14,7 @@ describe('#CacheableConfigurationFactory', function () {
         myFactory.create = jest.fn(myFactory.create)
         const cacheableFactory = createCacheableConfigurationFactory(
             myFactory,
-            { reloadAfterMs: 3600000 },
+            { reloadAfterMs: TimeInterval.hours(1) },
             () => new Date('2020-06-08 12:56:37')
         )
 
@@ -34,7 +34,7 @@ describe('#CacheableConfigurationFactory', function () {
         myFactory.create = jest.fn(myFactory.create)
         const cacheableFactory = createCacheableConfigurationFactory(
             myFactory,
-            { reloadAfterMs: 3600000 },
+            { reloadAfterMs: TimeInterval.hours(1) },
             () => currentTime
         )
 
@@ -55,7 +55,7 @@ describe('#CacheableConfigurationFactory', function () {
         myFactory.create = jest.fn(myFactory.create)
         const cacheableFactory = createCacheableConfigurationFactory(
             myFactory,
-            { reloadAfterMs: 3600000 },
+            { reloadAfterMs: TimeInterval.hours(1) },
             () => currentTime
         )
 
@@ -68,5 +68,50 @@ describe('#CacheableConfigurationFactory', function () {
 
         // Assert
         expect(myFactory.create).toBeCalledTimes(3)
+    })
+})
+
+describe('#TimeInterval', function () {
+    it('should create a time interval from ms', function () {
+        // Act
+        const timeInterval = TimeInterval.ms(1000)
+
+        // Assert
+        expect(timeInterval.getMs()).toBe(1000)
+    })
+
+    it('should create a time interval from seconds', function () {
+        // Act
+        const timeInterval = TimeInterval.seconds(2)
+
+        // Assert
+        expect(timeInterval.getMs()).toBe(2000)
+    })
+
+    it('should create a time interval from minutes', function () {
+        // Act
+        const timeInterval = TimeInterval.minutes(3)
+
+        // Assert
+        expect(timeInterval.getMs()).toBe(180000)
+    })
+
+    it('should create a time interval from hours', function () {
+        // Act
+        const timeInterval = TimeInterval.hours(1)
+
+        // Assert
+        expect(timeInterval.getMs()).toBe(3600000)
+    })
+
+    it('should associate multiple date interval', function () {
+        // Act
+        const timeInterval = TimeInterval.hours(1)
+            .and(TimeInterval.minutes(30))
+            .and(TimeInterval.seconds(4))
+            .and(TimeInterval.ms(500))
+
+        // Assert
+        expect(timeInterval.getMs()).toBe(5404500)
     })
 })
