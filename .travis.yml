@@ -3,9 +3,13 @@ node_js:
   - 10
   - 12
   - 14
-test:
-  branches:
-    only:
+branches:
+  only:
     - main
-  script:
-  - npm run test:coverage
+    - monorepo
+install:
+  - npm install -g lerna
+  - npx lerna bootstrap
+script:
+  - lerna run test
+  - lerna run test:coverage
