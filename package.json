@@ -5,10 +5,9 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage --coverageReporters=text-lcov --config=jest.config.js | coveralls",
-    "prepublish": "npm run build"
+    "test": "lerna run test",
+    "test:coverage": "lerna run test:coverage",
+    "prepublish": "lerna run build"
   },
   "repository": {
     "type": "git",
