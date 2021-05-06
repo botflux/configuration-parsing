@@ -16,5 +16,5 @@ class JoiConfigurationValidation<TConfiguration> implements ValidatableConfigura
 
 export const validatorName: string = JoiConfigurationValidation.name
 
-export const joiConfigurationValidator = <TConfiguration> (joiObjectSchema: Joi.ObjectSchema) =>
+export const joiConfigurationValidator = <TConfiguration> (joiObjectSchema: Joi.ObjectSchema): ValidatableConfiguration<TConfiguration> =>
     new JoiConfigurationValidation<TConfiguration>(joiObjectSchema)
