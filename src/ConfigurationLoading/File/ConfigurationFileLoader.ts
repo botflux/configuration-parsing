@@ -58,5 +58,5 @@ export const defaultFileLoaderDependencies = {
  * @param options
  * @param dependencies
  */
-export const configurationFileLoader = (options: FileLoaderOptions, dependencies: FileLoaderDependencies = defaultFileLoaderDependencies) =>
+export const configurationFileLoader = (options: FileLoaderOptions, dependencies: FileLoaderDependencies = defaultFileLoaderDependencies): LoadableConfiguration =>
     new ConfigurationFileLoader(options, dependencies)
