@@ -1,6 +1,6 @@
 {
   "name": "configuration-parsing",
-  "version": "0.3.4",
+  "version": "0.3.5-alpha.0",
   "description": "A configuration management library",
   "main": "dist/index.js",
   "scripts": {
