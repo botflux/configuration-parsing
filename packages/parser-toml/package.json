@@ -1,0 +1,38 @@
+{
+  "name": "@configuration-parsing/parser-toml",
+  "version": "0.3.4",
+  "description": "Toml parser for configuration-parsing/core",
+  "keywords": [
+    "toml",
+    "configuration"
+  ],
+  "author": "Victor Mendele <v-mendele@logitud.fr>",
+  "homepage": "https://github.com/botflux/configuration-parsing/tree/main/packages/parser-toml#readme",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/botflux/configuration-parsing.git"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "test": "jest"
+  },
+  "bugs": {
+    "url": "https://github.com/botflux/configuration-parsing/issues"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.34",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.3",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "toml": "^3.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
