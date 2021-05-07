@@ -1,6 +1,6 @@
 {
   "name": "@configuration-parsing/parser-toml",
-  "version": "0.3.6-alpha.0",
+  "version": "0.3.6-alpha.1",
   "description": "Toml parser for configuration-parsing/core",
   "keywords": [
     "toml",
