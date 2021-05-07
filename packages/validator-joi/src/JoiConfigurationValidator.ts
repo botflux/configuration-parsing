@@ -1,4 +1,4 @@
-import {ConfigurationValidationError, ValidatableConfiguration} from '../ValidatableConfiguration'
+import {ConfigurationValidationError, ValidatableConfiguration} from '@configuration-parsing/core'
 import Joi from 'joi'
 
 class JoiConfigurationValidation<TConfiguration> implements ValidatableConfiguration<TConfiguration> {
