@@ -1,6 +1,6 @@
 {
   "name": "@configuration-parsing/parser-toml",
-  "version": "0.3.6-alpha.1",
+  "version": "0.3.6-alpha.7",
   "description": "Toml parser for configuration-parsing/core",
   "keywords": [
     "toml",
@@ -30,7 +30,7 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
-    "@configuration-parsing/core": "^0.3.6-alpha.0",
+    "@configuration-parsing/core": "^0.3.6-alpha.7",
     "toml": "^3.0.0"
   },
   "publishConfig": {
