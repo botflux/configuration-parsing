@@ -1,5 +1,5 @@
 import Toml from 'toml'
-import {ConfigurationParsingError, ParsableConfiguration} from '@core/ParsableConfiguration'
+import {ConfigurationParsingError, ParsableConfiguration} from '@configuration-parsing/core'
 
 const isToml = (rawConfiguration: string) => {
     try {
