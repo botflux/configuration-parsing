@@ -38,7 +38,7 @@ type MyConfiguration = { hello: { db: string } }
 
 // Creating the different component
 // Loadable are able to load raw piece of configuration.
-const fileLoader = loaders.file({ location: 'testing/configuration.json' })
+const fileLoader = loaders.file()
 
 // Parsable are able to parse raw piece of configuration. 
 const jsonParser = parsers.json()
@@ -55,7 +55,7 @@ const configurationFactory = fromLoadable<MyConfiguration>(fileLoader)
     .parsingWith(parser)
     .validatingWith(validator)
 
-const configuration: MyConfiguration = await configurationFactory.create()
+const configuration: MyConfiguration = await configurationFactory.create({ location: 'testing/configuration.json' })
 ```
 
 ### Another usage
@@ -79,7 +79,7 @@ const validator = validators.joi(Joi.object({
 const configurationFactory = fromParsedLoadable<ProcessEnv, Configuration>(parsedLoader)
     .validatingWith(validator)
 
-const configuration: Configuration = await configurationFactory.create()
+const configuration: Configuration = await configurationFactory.create(process.env)
 ```
 
 ### Composing multiple parsers
@@ -111,7 +111,7 @@ type MyConfiguration = { hello: { db: string } }
 
 // Creating the different component
 // Loadable are able to load raw piece of configuration.
-const fileLoader = loaders.file({ location: 'testing/configuration.json' })
+const fileLoader = loaders.file()
 
 // Parsable are able to parse raw piece of configuration. 
 const jsonParser = parsers.json()
@@ -135,7 +135,9 @@ const cacheableConfigurationFactory = createCacheableConfigurationFactory(
 
 // Will load the configuration the first and cache it
 // until the reload time was passed.
-const configuration: MyConfiguration = await cacheableConfigurationFactory.create()
+const configuration: MyConfiguration = await cacheableConfigurationFactory.create({ 
+    location: 'testing/configuration.json' 
+})
 
 ```
 
@@ -165,28 +167,26 @@ export type FileLoaderDependencies = {
 }
 
 class ConfigurationFileLoader implements LoadableConfiguration {
-    constructor(
-        private readonly options: FileLoaderOptions,
-        private readonly dependencies: FileLoaderDependencies) {}
+    constructor(private readonly dependencies: FileLoaderDependencies) {}
 
-    async load(): Promise<string> {
-        if (!this.dependencies.exists(this.options.fileLocation)) {
+    async load(options: FileLoaderOptions): Promise<string> {
+        if (!this.dependencies.exists(options.fileLocation)) {
             return Promise.reject(new ConfigurationLoadingError(
                 `Something went wrong while loading a configuration file. ` +
-                `The file at ${this.options.fileLocation} doesn't exist. Are you this is the correct path?`
+                `The file at ${options.fileLocation} doesn't exist. Are you this is the correct path?`
             ))
         }
 
         try {
-            await this.dependencies.access(this.options.fileLocation, fs.constants.R_OK)
+            await this.dependencies.access(options.fileLocation, fs.constants.R_OK)
         } catch (e) {
             return Promise.reject(new ConfigurationLoadingError(
                 `Something went wrong while loading a configuration file. ` +
-                `The file at ${this.options.fileLocation} can't be read. Are you the read access was given?`
+                `The file at ${options.fileLocation} can't be read. Are you the read access was given?`
             ))
         }
 
-        return this.dependencies.readFile(this.options.fileLocation, 'utf-8')
+        return this.dependencies.readFile(options.fileLocation, 'utf-8')
             .catch(error => Promise.reject(new ConfigurationLoadingError(
                 `Something went wrong while loading a configuration file (${this.options.fileLocation}). ` +
                 error.message
@@ -205,8 +205,8 @@ export const defaultFileLoaderDependencies = {
  * @param options
  * @param dependencies
  */
-export const configurationFileLoader = (options: FileLoaderOptions, dependencies: FileLoaderDependencies = defaultFileLoaderDependencies) =>
-    new ConfigurationFileLoader(options, dependencies)
+export const configurationFileLoader = (dependencies: FileLoaderDependencies = defaultFileLoaderDependencies) =>
+    new ConfigurationFileLoader(dependencies)
 ```
 
 #### Parsed loaders
@@ -223,10 +223,8 @@ export type ProcessEnv = {
 }
 
 class EnvironmentConfigurationLoader implements ParsedLoadableConfiguration<ProcessEnv> {
-    constructor(private readonly env: ProcessEnv = process.env) {}
-
-    load(): Promise<ProcessEnv> {
-        return Promise.resolve(this.env);
+    load(env: ProcessEnv): Promise<ProcessEnv> {
+        return Promise.resolve(env);
     }
 }
 
