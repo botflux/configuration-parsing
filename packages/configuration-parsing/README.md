@@ -14,7 +14,7 @@ functions to compose loaders, parsers and validators.
 - `@configuration-parsing/parser-toml` contains the toml parser.
 - `@configuration-parsing/validator-joi` contains the joi validator.
 
-The package `configuration-parsing` will be maintained till version `0.3.7`.
+The package `configuration-parsing` will be maintained till version `0.3.6`.
 
 # Configuration parsing
 
