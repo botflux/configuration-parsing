@@ -1,7 +1,7 @@
 import {ComposedConfigurationFactory} from '../Compose'
 import {createCacheableConfigurationFactory, TimeInterval} from './CacheableConfigurationFactory'
 
-class FakeConfigurationFactory implements ComposedConfigurationFactory<{ hello: string }> {
+class FakeConfigurationFactory implements ComposedConfigurationFactory<{ hello: string }, undefined> {
     create(): Promise<{ hello: string }> {
         return Promise.resolve({ hello: 'world' });
     }
