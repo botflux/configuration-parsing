@@ -3,6 +3,18 @@
 [![GitHub issues](https://img.shields.io/github/issues/botflux/configuration-parsing.svg)](https://GitHub.com/botflux/configuration-parsing/issues/)
 [![GitHub license](https://img.shields.io/github/license/botflux/configuration-parsing.svg)](https://github.com/botflux/configuration-parsing/blob/main/LICENSE)
 
+## Moving to Monorepo
+
+`configuration-parsing` makes use of various packages to handle configuration: `toml`, `yaml` or `joi`.
+You don't want those packages installed if you don't use them. This package will now be split into multiple other packages:
+
+- `@configuration-parsing/core` contains the core features such as file, env loader and json parser. You will also find the helper
+functions to compose loaders, parsers and validators.
+- `@configuration-parsing/parser-yaml` contains the yaml parser.
+- `@configuration-parsing/parser-toml` contains the toml parser.
+- `@configuration-parsing/validator-joi` contains the joi validator.
+
+The package `configuration-parsing` will be maintained till version `0.3.7`.
 
 # Configuration parsing
 
