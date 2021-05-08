@@ -8,7 +8,7 @@
     "test": "jest",
     "test:coverage:text": "jest --coverage",
     "test:coverage:coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
-    "prepublish": "lerna run build"
+    "prepublish": "npm run test && lerna run build"
   },
   "repository": {
     "type": "git",
