@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/botflux/configuration-parsing#readme",
   "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.0.2",
     "@types/yaml": "^1.9.7",
     "lerna": "^4.0.0"
   },

@@ -2,50 +2,50 @@ import {ParsedLoadableConfiguration, LoadableConfiguration} from './Configuratio
 import {ValidatableConfiguration} from './ConfigurationValidation/ValidatableConfiguration'
 import {ParsableConfiguration} from './ConfigurationParsing/ParsableConfiguration'
 
-export interface WithValidatableBuildable<TConfiguration> {
-    validatingWith(validatable: ValidatableConfiguration<TConfiguration>): ComposedConfigurationFactory<TConfiguration>
+export interface WithValidatableBuildable<TConfiguration, TLoaderOptions> {
+    validatingWith(validatable: ValidatableConfiguration<TConfiguration>): ComposedConfigurationFactory<TConfiguration, TLoaderOptions>
 }
 
-export interface ComposedConfigurationFactory<TConfiguration> {
-    create(): Promise<TConfiguration>
+export interface ComposedConfigurationFactory<TConfiguration, TLoaderOptions> {
+    create(options: TLoaderOptions): Promise<TConfiguration>
 }
 
-class ParsedLoadableConfigurationFactory<TConfiguration, TParsedConfiguration> implements ComposedConfigurationFactory<TConfiguration> {
+class ParsedLoadableConfigurationFactory<TConfiguration, TParsedConfiguration, TLoaderOptions> implements ComposedConfigurationFactory<TConfiguration, TLoaderOptions> {
     constructor(private readonly validatable: ValidatableConfiguration<TConfiguration>,
-                private readonly parsable: ParsedLoadableConfiguration<TParsedConfiguration>) {}
+                private readonly parsable: ParsedLoadableConfiguration<TParsedConfiguration, TLoaderOptions>) {}
 
-    create(): Promise<TConfiguration> {
-        return this.parsable.load()
+    create(loaderOptions: TLoaderOptions): Promise<TConfiguration> {
+        return this.parsable.load(loaderOptions)
             .then(unvalidatedConfiguration => this.validatable.validate(unvalidatedConfiguration))
     }
 }
 
-class LoadableConfigurationFactory<TConfiguration> implements ComposedConfigurationFactory<TConfiguration> {
-    constructor(private readonly loadable: LoadableConfiguration,
+class LoadableConfigurationFactory<TConfiguration, TLoaderOptions> implements ComposedConfigurationFactory<TConfiguration, TLoaderOptions> {
+    constructor(private readonly loadable: LoadableConfiguration<TLoaderOptions>,
                 private readonly parsable: ParsableConfiguration,
                 private readonly validatable: ValidatableConfiguration<TConfiguration>
     ) {}
 
-    create(): Promise<TConfiguration> {
-        return this.loadable.load()
+    create(options: TLoaderOptions): Promise<TConfiguration> {
+        return this.loadable.load(options)
             .then(rawConfiguration => this.parsable.parse(rawConfiguration))
             .then(unvalidatedConfiguration => this.validatable.validate(unvalidatedConfiguration))
     }
 }
 
-export const fromParsedLoadable = <TParsedConfiguration, TOutputConfiguration extends TParsedConfiguration> (parsable: ParsedLoadableConfiguration<TParsedConfiguration>): WithValidatableBuildable<TOutputConfiguration> => ({
+export const fromParsedLoadable = <TParsedConfiguration, TOutputConfiguration extends TParsedConfiguration, TLoaderOptions> (parsable: ParsedLoadableConfiguration<TParsedConfiguration, TLoaderOptions>): WithValidatableBuildable<TOutputConfiguration, TLoaderOptions> => ({
     validatingWith: (validatable: ValidatableConfiguration<TOutputConfiguration>) =>
-        new ParsedLoadableConfigurationFactory<TOutputConfiguration, TParsedConfiguration>(validatable, parsable)
+        new ParsedLoadableConfigurationFactory<TOutputConfiguration, TParsedConfiguration, TLoaderOptions>(validatable, parsable)
 })
 
-interface WithParsable<TConfiguration> {
-    parsingWith(parsable: ParsableConfiguration): WithValidatableBuildable<TConfiguration>
+interface WithParsable<TConfiguration, TLoaderOptions> {
+    parsingWith(parsable: ParsableConfiguration): WithValidatableBuildable<TConfiguration, TLoaderOptions>
 }
 
-export const fromLoadable = <TConfiguration> (loadable: LoadableConfiguration): WithParsable<TConfiguration> => ({
-    parsingWith(parsable: ParsableConfiguration): WithValidatableBuildable<TConfiguration> {
+export const fromLoadable = <TConfiguration, TLoaderOptions> (loadable: LoadableConfiguration<TLoaderOptions>): WithParsable<TConfiguration, TLoaderOptions> => ({
+    parsingWith(parsable: ParsableConfiguration): WithValidatableBuildable<TConfiguration, TLoaderOptions> {
         return {
-            validatingWith(validatable: ValidatableConfiguration<TConfiguration>): ComposedConfigurationFactory<TConfiguration> {
+            validatingWith(validatable: ValidatableConfiguration<TConfiguration>): ComposedConfigurationFactory<TConfiguration, TLoaderOptions> {
                 return new LoadableConfigurationFactory(loadable, parsable, validatable)
             }
         }
