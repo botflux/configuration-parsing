@@ -6,12 +6,12 @@ import fs from 'fs'
 describe('ConfigurationFileLoader', function () {
     it('should load the configuration', async function () {
         // Arrange
-        const loader = configurationFileLoader({
-            fileLocation: path.join(process.cwd(), 'testing/some-file.txt')
-        })
+        const loader = configurationFileLoader()
 
         // Act
-        const fileContent = await loader.load()
+        const fileContent = await loader.load({
+            fileLocation: path.join(process.cwd(), 'testing/some-file.txt')
+        })
 
         // Assert
         expect(fileContent).toBe('hello world\n')
@@ -19,12 +19,12 @@ describe('ConfigurationFileLoader', function () {
 
     it('should reject when the file does not exist', async function () {
         // Arrange
-        const loader = configurationFileLoader({
-            fileLocation: 'a-file-that-does-not-exists.txt'
-        })
+        const loader = configurationFileLoader()
 
         // Act
-        const promise = loader.load()
+        const promise = loader.load({
+            fileLocation: 'a-file-that-does-not-exists.txt'
+        })
 
         // Assert
         await expect(promise).rejects.toEqual(new ConfigurationLoadingError(
@@ -42,12 +42,12 @@ describe('ConfigurationFileLoader', function () {
             exists: fs.existsSync
         }
         const absolutePath = path.join(process.cwd(), 'testing/some-file.txt')
-        const loader = configurationFileLoader({
-            fileLocation: absolutePath
-        }, dependencies)
+        const loader = configurationFileLoader(dependencies)
 
         // Act
-        const promise = loader.load()
+        const promise = loader.load({
+            fileLocation: absolutePath
+        })
 
         // Assert
         await expect(promise).rejects.toEqual(new ConfigurationLoadingError(
@@ -65,12 +65,12 @@ describe('ConfigurationFileLoader', function () {
             exists: () => true
         }
         const path = 'fake-file.txt'
-        const loader = configurationFileLoader({
-            fileLocation: path
-        }, dependencies)
+        const loader = configurationFileLoader(dependencies)
 
         // Act
-        const promise = loader.load()
+        const promise = loader.load({
+            fileLocation: path
+        })
 
         // Assert
         await expect(promise).rejects.toEqual(new ConfigurationLoadingError(

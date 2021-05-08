@@ -11,34 +11,33 @@ export type FileLoaderDependencies = {
     access: typeof fs.promises.access
 }
 
-class ConfigurationFileLoader implements LoadableConfiguration {
+class ConfigurationFileLoader implements LoadableConfiguration<FileLoaderOptions> {
     constructor(
-        private readonly options: FileLoaderOptions,
         private readonly dependencies: FileLoaderDependencies) {}
 
-    async load(): Promise<string> {
-        if (!this.dependencies.exists(this.options.fileLocation)) {
+    async load(options: FileLoaderOptions): Promise<string> {
+        if (!this.dependencies.exists(options.fileLocation)) {
             return Promise.reject(new ConfigurationLoadingError(
                 `Something went wrong while loading a configuration file. ` +
-                `The file at ${this.options.fileLocation} doesn't exist. Are you this is the correct path?`,
+                `The file at ${options.fileLocation} doesn't exist. Are you this is the correct path?`,
                 ConfigurationFileLoader.name
             ))
         }
 
         try {
-            await this.dependencies.access(this.options.fileLocation, fs.constants.R_OK)
+            await this.dependencies.access(options.fileLocation, fs.constants.R_OK)
         } catch (e) {
             return Promise.reject(new ConfigurationLoadingError(
                 `Something went wrong while loading a configuration file. ` +
-                `The file at ${this.options.fileLocation} can't be read. Are you the read access was given?`,
+                `The file at ${options.fileLocation} can't be read. Are you the read access was given?`,
                 ConfigurationFileLoader.name,
                 e
             ))
         }
 
-        return this.dependencies.readFile(this.options.fileLocation, 'utf-8')
+        return this.dependencies.readFile(options.fileLocation, 'utf-8')
             .catch(error => Promise.reject(new ConfigurationLoadingError(
-                `Something went wrong while loading a configuration file (${this.options.fileLocation}). `,
+                `Something went wrong while loading a configuration file (${options.fileLocation}). `,
                 ConfigurationFileLoader.name,
                 error
             )));
@@ -58,5 +57,5 @@ export const defaultFileLoaderDependencies = {
  * @param options
  * @param dependencies
  */
-export const configurationFileLoader = (options: FileLoaderOptions, dependencies: FileLoaderDependencies = defaultFileLoaderDependencies): LoadableConfiguration =>
-    new ConfigurationFileLoader(options, dependencies)
+export const configurationFileLoader = (dependencies: FileLoaderDependencies = defaultFileLoaderDependencies): LoadableConfiguration<FileLoaderOptions> =>
+    new ConfigurationFileLoader(dependencies)

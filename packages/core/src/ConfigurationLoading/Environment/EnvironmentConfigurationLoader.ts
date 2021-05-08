@@ -4,13 +4,12 @@ export type ProcessEnv = {
     [key: string]: string | undefined
 }
 
-class EnvironmentConfigurationLoader implements ParsedLoadableConfiguration<ProcessEnv> {
-    constructor(private readonly env: ProcessEnv = process.env) {}
+class EnvironmentConfigurationLoader implements ParsedLoadableConfiguration<ProcessEnv, ProcessEnv> {
 
-    load(): Promise<ProcessEnv> {
-        return Promise.resolve(this.env);
+    load(env: ProcessEnv = process.env): Promise<ProcessEnv> {
+        return Promise.resolve(env);
     }
 }
 
-export const configurationEnvironmentLoader = (env: ProcessEnv = process.env): ParsedLoadableConfiguration<ProcessEnv> =>
-    new EnvironmentConfigurationLoader(env)
+export const configurationEnvironmentLoader = (): ParsedLoadableConfiguration<ProcessEnv, ProcessEnv> =>
+    new EnvironmentConfigurationLoader()

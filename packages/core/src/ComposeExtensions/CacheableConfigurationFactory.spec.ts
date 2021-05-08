@@ -1,7 +1,7 @@
 import {ComposedConfigurationFactory} from '../Compose'
 import {createCacheableConfigurationFactory, TimeInterval} from './CacheableConfigurationFactory'
 
-class FakeConfigurationFactory implements ComposedConfigurationFactory<{ hello: string }> {
+class FakeConfigurationFactory implements ComposedConfigurationFactory<{ hello: string }, undefined> {
     create(): Promise<{ hello: string }> {
         return Promise.resolve({ hello: 'world' });
     }
@@ -19,8 +19,8 @@ describe('#CacheableConfigurationFactory', function () {
         )
 
         // Act
-        await cacheableFactory.create()
-        await cacheableFactory.create()
+        await cacheableFactory.create(undefined)
+        await cacheableFactory.create(undefined)
 
         // Assert
         expect(myFactory.create).toBeCalledTimes(1)
@@ -39,9 +39,9 @@ describe('#CacheableConfigurationFactory', function () {
         )
 
         // Act
-        await cacheableFactory.create()
+        await cacheableFactory.create(undefined)
         currentTime = new Date('2020-06-08 14:56:39')
-        await cacheableFactory.create()
+        await cacheableFactory.create(undefined)
 
         // Assert
         expect(myFactory.create).toBeCalledTimes(2)
@@ -60,11 +60,11 @@ describe('#CacheableConfigurationFactory', function () {
         )
 
         // Act
-        await cacheableFactory.create()
+        await cacheableFactory.create(undefined)
         currentTime = new Date('2020-06-08 14:56:39')
-        await cacheableFactory.create()
+        await cacheableFactory.create(undefined)
         currentTime = new Date('2020-06-08 15:56:39')
-        await cacheableFactory.create()
+        await cacheableFactory.create(undefined)
 
         // Assert
         expect(myFactory.create).toBeCalledTimes(3)
