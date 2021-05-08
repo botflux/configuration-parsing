@@ -8,7 +8,7 @@ branches:
     - main
     - monorepo
 install:
-  - npm install -g lerna
+  - npm install
   - npx lerna bootstrap
 script:
   - npm run test:coverage:coveralls
