@@ -1,0 +1,16 @@
+{
+  "name": "@configuration-parsing/basic-js-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Victor Mendele <victor.mendele68@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@configuration-parsing/core": "^0.5.1",
+    "@configuration-parsing/validator-joi": "^0.5.1",
+    "joi": "^17.4.0"
+  }
+}
