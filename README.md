@@ -18,8 +18,19 @@ npm install @configuration-parsing/validator-joi
 npm install @configuration-parsing/parser-yaml
 # Optional - If you want to use toml configuration
 npm install @configuration-parsing/parser-toml
-# 
 ```
+
+## Monorepo
+
+Until the version `0.3.6`, `configuration-parsing` was a single package. Now this package is split into multiple packages so someone who doesn't use toml or yaml
+configuration doesn't have to download additional package.
+
+Current packages:
+
+- `@configuration-parsing/core` contains a JSON parser, file and env loader and empty validator. You fill also find functions that help composing loader, parser and validator.
+- `@configuration-parsing/parser-yaml` contains a yaml parser.
+- `@configuration-parsing/parser-toml` contains a toml parser.
+- `@configuration-parsing/validator-joi` contains the joi validator.
 
 ## Architecture
 
@@ -322,7 +333,7 @@ export const joiConfigurationValidator = <TConfiguration> (joiObjectSchema: Joi.
 
 ## Building the project
 
-The project is testing in node 10, 12 and 14.
+The project is tested in node 10, 12 and 14.
 
 ```shell
 npm i
