@@ -4,11 +4,9 @@
   "description": "A configuration management library",
   "main": "dist/index.js",
   "scripts": {
-    "postinstall": "lerna bootstrap",
     "test": "jest",
     "test:coverage:text": "jest --coverage",
     "test:coverage:coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
-    "prepublish": "npm run test && lerna run build",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
