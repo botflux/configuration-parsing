@@ -11,7 +11,14 @@ A package that helps manage the loading, parsing, validation of your configurati
 # Installation
 
 ```shell
-npm install configuration-parsing
+npm install @configuration-parsing/core
+# Optional - You can validate your configuration using joi.
+npm install @configuration-parsing/validator-joi
+# Optional - If you want to use yaml configuration
+npm install @configuration-parsing/parser-yaml
+# Optional - If you want to use toml configuration
+npm install @configuration-parsing/parser-toml
+# 
 ```
 
 ## Architecture
@@ -32,30 +39,35 @@ Loading a configuration formatted in json from file system. The configuration is
 
 ```typescript
 import Joi from 'joi'
-import {parsers, loaders, validators, fromLoadable} from 'configuration-parsing'
+import {parsers, loaders, fromLoadable} from '@configuration-parsing/core'
+import { joiConfigurationValidator } from '@configuration-parsing/validator-joi'
 
 type MyConfiguration = { hello: { db: string } }
 
 // Creating the different component
 // Loadable are able to load raw piece of configuration.
-const fileLoader = loaders.file({ location: 'testing/configuration.json' })
+const fileLoader = loaders.file()
 
 // Parsable are able to parse raw piece of configuration. 
 const jsonParser = parsers.json()
 
 // Validatable are able to validate parsed piece of configuration.
-const validator = validators.joi<MyConfiguration>(Joi.object({
+const validator = joiConfigurationValidator<MyConfiguration>(Joi.object({
     hello: Joi.object({
         db: Joi.string()
     })
 }))
+
+// You can also pass the validation using core package `validators.empty()`
 
 // You can compose each component to create a configuration factory.
 const configurationFactory = fromLoadable<MyConfiguration>(fileLoader)
     .parsingWith(parser)
     .validatingWith(validator)
 
-const configuration: MyConfiguration = await configurationFactory.create()
+const configuration: MyConfiguration = await configurationFactory.create({ 
+    location: 'testing/configuration.json' 
+})
 ```
 
 ### Another usage
@@ -65,7 +77,8 @@ component. The `ParsedLoadableConfiguration` helps you load an already parsed co
 
 ```typescript
 import Joi from 'joi'
-import {loaders, validators, fromParsedLoadable} from 'configuration-parsing'
+import {loaders, validators, fromParsedLoadable} from '@configuration-parsing/core'
+import {joiConfigurationValidator} from '@configuration-parsing/validator-joi'
 
 type Configuration = { API_KEY: string }
 
@@ -79,7 +92,7 @@ const validator = validators.joi(Joi.object({
 const configurationFactory = fromParsedLoadable<ProcessEnv, Configuration>(parsedLoader)
     .validatingWith(validator)
 
-const configuration: Configuration = await configurationFactory.create()
+const configuration: Configuration = await configurationFactory.create(process.env)
 ```
 
 ### Composing multiple parsers
@@ -90,12 +103,16 @@ To find the parser that fits the given configuration, each parser's `supports` m
 is supported by the parser then the configuration gets parsed.
 
 ```typescript
-import {parsers} from 'configuration-parsing'
+import {parsers} from '@configuration-parsing/core'
+import {yamlConfigurationParser} from '@configuration-parsing/parser-yaml'
 
 const rawJson = `{ "hello": "world" }`
 const rawYaml = `hello: world`
 
-const yamlAndJsonParsers = parsers.chain([ parsers.yaml(), parsers.json() ])
+const yamlAndJsonParsers = parsers.chain([ 
+    yamlConfigurationParser(), 
+    parsers.json() 
+])
 
 const parsedJson = yamlAndJsonParsers.parse(rawJson)
 const parsedYaml = yamlAndJsonParsers.parse(rawYaml)
@@ -104,24 +121,19 @@ const parsedYaml = yamlAndJsonParsers.parse(rawYaml)
 ### Cached configuration factory
 
 ```typescript
-import Joi from 'joi'
 import { TimeInterval, parsers, loaders, validators, fromLoadable, createCacheableConfigurationFactory } from 'configuration-parsing'
 
 type MyConfiguration = { hello: { db: string } }
 
 // Creating the different component
 // Loadable are able to load raw piece of configuration.
-const fileLoader = loaders.file({ location: 'testing/configuration.json' })
+const fileLoader = loaders.file()
 
 // Parsable are able to parse raw piece of configuration. 
 const jsonParser = parsers.json()
 
 // Validatable are able to validate parsed piece of configuration.
-const validator = validators.joi<MyConfiguration>(Joi.object({
-    hello: Joi.object({
-        db: Joi.string()
-    })
-}))
+const validator = validators.empty()
 
 // You can compose each component to create a configuration factory.
 const configurationFactory = fromLoadable<MyConfiguration>(fileLoader)
@@ -135,7 +147,9 @@ const cacheableConfigurationFactory = createCacheableConfigurationFactory(
 
 // Will load the configuration the first and cache it
 // until the reload time was passed.
-const configuration: MyConfiguration = await cacheableConfigurationFactory.create()
+const configuration: MyConfiguration = await cacheableConfigurationFactory.create{
+     location: 'testing/configuration.json' 
+})
 
 ```
 
@@ -164,31 +178,30 @@ export type FileLoaderDependencies = {
     access: typeof fs.promises.access
 }
 
-class ConfigurationFileLoader implements LoadableConfiguration {
+class ConfigurationFileLoader implements LoadableConfiguration<FileLoaderOptions> {
     constructor(
-        private readonly options: FileLoaderOptions,
         private readonly dependencies: FileLoaderDependencies) {}
 
-    async load(): Promise<string> {
-        if (!this.dependencies.exists(this.options.fileLocation)) {
+    async load(options: FileLoaderOptions): Promise<string> {
+        if (!this.dependencies.exists(options.fileLocation)) {
             return Promise.reject(new ConfigurationLoadingError(
                 `Something went wrong while loading a configuration file. ` +
-                `The file at ${this.options.fileLocation} doesn't exist. Are you this is the correct path?`
+                `The file at ${options.fileLocation} doesn't exist. Are you this is the correct path?`
             ))
         }
 
         try {
-            await this.dependencies.access(this.options.fileLocation, fs.constants.R_OK)
+            await this.dependencies.access(options.fileLocation, fs.constants.R_OK)
         } catch (e) {
             return Promise.reject(new ConfigurationLoadingError(
                 `Something went wrong while loading a configuration file. ` +
-                `The file at ${this.options.fileLocation} can't be read. Are you the read access was given?`
+                `The file at ${options.fileLocation} can't be read. Are you the read access was given?`
             ))
         }
 
-        return this.dependencies.readFile(this.options.fileLocation, 'utf-8')
+        return this.dependencies.readFile(options.fileLocation, 'utf-8')
             .catch(error => Promise.reject(new ConfigurationLoadingError(
-                `Something went wrong while loading a configuration file (${this.options.fileLocation}). ` +
+                `Something went wrong while loading a configuration file (${options.fileLocation}). ` +
                 error.message
             )));
     }
@@ -205,8 +218,8 @@ export const defaultFileLoaderDependencies = {
  * @param options
  * @param dependencies
  */
-export const configurationFileLoader = (options: FileLoaderOptions, dependencies: FileLoaderDependencies = defaultFileLoaderDependencies) =>
-    new ConfigurationFileLoader(options, dependencies)
+export const configurationFileLoader = (dependencies: FileLoaderDependencies = defaultFileLoaderDependencies) =>
+    new ConfigurationFileLoader(dependencies)
 ```
 
 #### Parsed loaders
@@ -222,16 +235,16 @@ export type ProcessEnv = {
     [key: string]: string | undefined
 }
 
-class EnvironmentConfigurationLoader implements ParsedLoadableConfiguration<ProcessEnv> {
-    constructor(private readonly env: ProcessEnv = process.env) {}
+class EnvironmentConfigurationLoader implements ParsedLoadableConfiguration<ProcessEnv, ProcessEnv> {
+    constructor() {}
 
-    load(): Promise<ProcessEnv> {
-        return Promise.resolve(this.env);
+    load(env: ProcessEnv): Promise<ProcessEnv> {
+        return Promise.resolve(env);
     }
 }
 
-export const configurationEnvironmentLoader = (env: ProcessEnv = process.env): ParsedLoadableConfiguration<ProcessEnv> =>
-    new EnvironmentConfigurationLoader(env)
+export const configurationEnvironmentLoader = (): ParsedLoadableConfiguration<ProcessEnv> =>
+    new EnvironmentConfigurationLoader()
 
 ```
 
