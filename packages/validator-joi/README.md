@@ -1,11 +1,26 @@
-# `validator-joi`
+# `@configuration-parsing/validator-joi`
 
-> TODO: description
+A joi validator implementaing the `ValidatableConfiguration` interface of `@configuration-parsing/core`.
+
+## Install
+
+```shell
+npm install @configuration-parsing/validator-joi
+```
 
 ## Usage
 
-```
-const validatorJoi = require('validator-joi');
+```typescript
+import { joiConfigurationValidator } from '@configuration-parser/validator-joi'
+import Joi from 'joi'
 
-// TODO: DEMONSTRATE API
+const parsedConfiguration = {
+    hello: 'world',
+    foo: 'bar'
+}
+const validator = joiConfigurationValidator(Joi.object({
+    hello: Joi.string().required(),
+    foo: Joi.string().required()
+}))
+const parsedConfiguration = await parser.validate(parsedConfiguration)
 ```

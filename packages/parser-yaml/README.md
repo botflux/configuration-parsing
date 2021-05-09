@@ -1,11 +1,19 @@
-# `parser-yaml`
+# `@configuration-parsing/parser-yaml`
 
-> TODO: description
+A yaml parser implementaing the `ParsableConfiguration` interface of `@configuration-parsing/core`.
+
+## Install
+
+```shell
+npm install @configuration-parsing/parser-yaml
+```
 
 ## Usage
 
-```
-const parserYaml = require('parser-yaml');
+```typescript
+import { yamlConfigurationParser } from '@configuration-parser/parser-yaml'
 
-// TODO: DEMONSTRATE API
+const yamlConfiguration = `hello: 2`
+const parser = yamlConfigurationParser()
+const parsedConfiguration = parser.parse()
 ```

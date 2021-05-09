@@ -1,11 +1,19 @@
-# `parser-toml`
+# `@configuration-parsing/parser-toml`
 
-> TODO: description
+A toml parser implementaing the `ParsableConfiguration` interface of `@configuration-parsing/core`.
+
+## Install
+
+```shell
+npm install @configuration-parsing/parser-toml
+```
 
 ## Usage
 
-```
-const parserToml = require('parser-toml');
+```typescript
+import { tomlConfigurationParser } from '@configuration-parser/parser-toml'
 
-// TODO: DEMONSTRATE API
+const tomlConfiguration = `hello = 2`
+const parser = tomlConfigurationParser()
+const parsedConfiguration = parser.parse()
 ```
