@@ -12,4 +12,6 @@ install:
   - npx lerna bootstrap
 script:
   - npm run build
+  - npm run test:alt
+  - npm run test
   # - npm run test:coverage:coveralls
