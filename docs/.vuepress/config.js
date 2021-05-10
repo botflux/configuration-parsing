@@ -18,7 +18,11 @@ module.exports = {
                 sidebarDepth: 2,
                 children: [
                     "/guide/",
-                    "/guide/installation.md"
+                    "/guide/installation.md",
+                    "/guide/usages.md",
+                    "/guide/write-a-loader.md",
+                    "/guide/write-a-parser.md",
+                    "/guide/write-a-validator.md",
                 ]
             }
         ]
