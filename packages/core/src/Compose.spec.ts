@@ -6,6 +6,7 @@ import {fromParsedLoadable, fromLoadable} from './Compose'
 import {configurationFileLoader, FileLoaderOptions} from './ConfigurationLoading/File/ConfigurationFileLoader'
 import {jsonConfigurationParser} from './ConfigurationParsing/Json/JsonConfigurationParser'
 import {emptyConfigurationValidator} from './ConfigurationValidation/Empty/EmptyConfigurationValidator'
+import {resolve} from 'path'
 
 describe('Compose', function () {
     describe('fromAlreadyParsedLoadableConfiguration', function () {
@@ -40,7 +41,7 @@ describe('Compose', function () {
                 .validatingWith(validator)
 
             // Act
-            const promise: Promise<Configuration> = composed.create({ fileLocation: 'testing/config.json' })
+            const promise: Promise<Configuration> = composed.create({ fileLocation: resolve(__dirname, '../testing/config.json') })
 
             // Assert
             await expect(promise).resolves.toEqual({
