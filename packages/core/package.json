@@ -7,7 +7,7 @@
     "configuration"
   ],
   "author": "Victor Mendele <v-mendele@logitud.fr>",
-  "homepage": "https://github.com/botflux/configuration-parsing/tree/main/packages/core#readme",
+  "homepage": "https://botflux.github.io/configuration-parsing",
   "license": "MIT",
   "main": "dist/index.js",
   "repository": {
@@ -35,8 +35,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "nyc": "^15.1.0"
   }
 }

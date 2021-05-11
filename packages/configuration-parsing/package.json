@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/botflux/configuration-parsing/issues"
   },
-  "homepage": "https://github.com/botflux/configuration-parsing#readme",
+  "homepage": "https://botflux.github.io/configuration-parsing",
   "devDependencies": {
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.34",
@@ -34,7 +34,6 @@
   },
   "dependencies": {
     "joi": "^17.4.0",
-    "nyc": "^15.1.0",
     "toml": "^3.0.0",
     "yaml": "^1.10.1"
   },

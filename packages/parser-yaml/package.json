@@ -7,7 +7,7 @@
     "configuration"
   ],
   "author": "Victor Mendele <v-mendele@logitud.fr>",
-  "homepage": "https://github.com/botflux/configuration-parsing/tree/main/packages/parser-yaml#readme",
+  "homepage": "https://botflux.github.io/configuration-parsing",
   "license": "MIT",
   "main": "dist/index.js",
   "repository": {
@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "@configuration-parsing/core": "^0.5.2",
-    "nyc": "^15.1.0",
     "yaml": "^1.10.1"
   },
   "gitHead": "8fec7cd180700974998f15a7eb926248b53b1577",
