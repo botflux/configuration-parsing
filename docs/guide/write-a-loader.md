@@ -8,7 +8,7 @@ To write a loader you should implement a loader interface. There are 2 types of 
 
 ```typescript
 import fs from 'fs'
-import {ConfigurationLoadingError, LoadableConfiguration} from '../LoadableConfiguration'
+import {ConfigurationLoadingError, LoadableConfiguration} from '@configuration-parsing/core'
 
 // Loader options
 export type FileLoaderOptions = {
@@ -75,7 +75,7 @@ export const configurationFileLoader = (dependencies: FileLoaderDependencies = d
 ## ParsedLoadableConfiguration example
 
 ```typescript
-import {ParsedLoadableConfiguration} from '../LoadableConfiguration'
+import {ParsedLoadableConfiguration} from '@configuration-parsing/core'
 
 export type ProcessEnv = {
     [key: string]: string | undefined
