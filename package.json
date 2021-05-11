@@ -9,7 +9,7 @@
     "test:alt": "lerna run test",
     "test": "jest",
     "test:coverage:text": "jest --coverage",
-    "test:coverage:coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "test:coverage:coveralls": "jest --coverage --coverageReporters=json | coveralls",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },

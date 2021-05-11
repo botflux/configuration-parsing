@@ -1,18 +1,17 @@
 language: node_js
 node_js:
-  - 10
   - 12
   - 14
 branches:
   only:
     - main
-    - monorepo
 install:
   - npm install
   - npx lerna bootstrap
 script:
   - npm run build
   - npm run test:alt
+  - npm run test
   - npm run docs:build
 deploy:
   provider: pages
@@ -20,5 +19,5 @@ deploy:
   local_dir: docs/.vuepress/dist
   github_token: $GITHUB_TOKEN
   keep_history: true
-  on: 
+  on:
     branch: main

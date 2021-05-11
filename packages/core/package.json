@@ -16,7 +16,8 @@
   },
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage --coverageReporters=json"
   },
   "bugs": {
     "url": "https://github.com/botflux/configuration-parsing/issues"
@@ -34,5 +35,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "nyc": "^15.1.0"
   }
 }

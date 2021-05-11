@@ -6,8 +6,7 @@
   "scripts": {
     "build": "rm -rf dist && tsc",
     "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage --coverageReporters=text-lcov --config=jest.config.js | coveralls"
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -35,6 +34,7 @@
   },
   "dependencies": {
     "joi": "^17.4.0",
+    "nyc": "^15.1.0",
     "toml": "^3.0.0",
     "yaml": "^1.10.1"
   },
