@@ -6,7 +6,7 @@
     "joi",
     "configuration"
   ],
-  "author": "Victor Mendele <v-mendele@logitud.fr>",
+  "author": "Victor Mendele",
   "homepage": "https://botflux.github.io/configuration-parsing",
   "license": "MIT",
   "main": "dist/index.js",
