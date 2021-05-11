@@ -13,6 +13,10 @@ A package that helps manage the loading, parsing, validation of your configurati
 npm install @configuration-parsing/core
 ```
 
+## Documentation
+
+[https://botlfux.github.io/configuration-parsing](https://botflux.github.io/configuration-parsing)
+
 ## Architecture
 
 This package is split in 3 main components:

@@ -1,12 +1,16 @@
 # `@configuration-parsing/validator-joi`
 
-A joi validator implementaing the `ValidatableConfiguration` interface of `@configuration-parsing/core`.
+A joi validator implementing the `ValidatableConfiguration` interface of `@configuration-parsing/core`.
 
 ## Install
 
 ```shell
 npm install @configuration-parsing/validator-joi
 ```
+
+## Documentation
+
+[https://botlfux.github.io/configuration-parsing](https://botflux.github.io/configuration-parsing)
 
 ## Usage
 

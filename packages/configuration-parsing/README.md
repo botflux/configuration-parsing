@@ -3,7 +3,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/botflux/configuration-parsing.svg)](https://GitHub.com/botflux/configuration-parsing/issues/)
 [![GitHub license](https://img.shields.io/github/license/botflux/configuration-parsing.svg)](https://github.com/botflux/configuration-parsing/blob/main/LICENSE)
 
-## Moving to Monorepo
+## Moving to Monorepo [https://botlfux.github.io/configuration-parsing](https://botflux.github.io/configuration-parsing)
 
 `configuration-parsing` makes use of various packages to handle configuration: `toml`, `yaml` or `joi`.
 You don't want those packages installed if you don't use them. This package will now be split into multiple other packages:
