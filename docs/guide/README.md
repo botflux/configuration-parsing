@@ -1,3 +1,5 @@
+# Getting started
+
 [![Build Status](https://travis-ci.com/botflux/configuration-parsing.svg?branch=main)](https://travis-ci.com/botflux/configuration-parsing)
 [![Coverage Status](https://coveralls.io/repos/github/botflux/configuration-parsing/badge.svg?branch=main)](https://coveralls.io/github/botflux/configuration-parsing?branch=main)
 [![GitHub issues](https://img.shields.io/github/issues/botflux/configuration-parsing.svg)](https://GitHub.com/botflux/configuration-parsing/issues/)
