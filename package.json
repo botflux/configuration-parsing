@@ -8,6 +8,7 @@
     "build": "lerna run build",
     "test:alt": "lerna run test",
     "test": "jest",
+    "test:watch": "jest --watch",
     "test:coverage:text": "jest --coverage",
     "test:coverage:coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "docs:dev": "vuepress dev docs",
