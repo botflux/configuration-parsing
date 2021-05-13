@@ -1,5 +1,7 @@
 import {ComposedConfigurationFactory} from '../Compose'
 import {createCacheableConfigurationFactory, TimeInterval} from './CacheableConfigurationFactory'
+import {fromParsedLoadable, loaders, validators} from '../index'
+import * as Joi from 'joi'
 
 class FakeConfigurationFactory implements ComposedConfigurationFactory<{ hello: string }, undefined> {
     create(): Promise<{ hello: string }> {
@@ -113,5 +115,22 @@ describe('#TimeInterval', function () {
 
         // Assert
         expect(timeInterval.getMs()).toBe(5404500)
+    })
+
+    it('should pass a default getCurrentTime function that returns new Date', async function () {
+        // Arrange
+        const configurationFactory = fromParsedLoadable(loaders.env())
+            .validatingWith(validators.joi(Joi.object({ HELLO: Joi.string() })))
+
+        // Act
+        const cacheableConfigurationFactory = createCacheableConfigurationFactory(
+            configurationFactory,
+            { reloadEvery: TimeInterval.seconds(2) }
+        )
+
+        const configuration = await cacheableConfigurationFactory.create({ HELLO: 'world' })
+
+        // Assert
+        expect(configuration).toEqual({ HELLO: 'world' })
     })
 })
