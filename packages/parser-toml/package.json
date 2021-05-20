@@ -17,7 +17,8 @@
   "scripts": {
     "build": "rm -rf dist && tsc",
     "test": "jest",
-    "test:coverage": "jest --coverage --coverageReporters=json"
+    "test:coverage": "jest --coverage --coverageReporters=json",
+    "prepublishOnly": "npm run build"
   },
   "bugs": {
     "url": "https://github.com/botflux/configuration-parsing/issues"

@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rm -rf dist && tsc",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
