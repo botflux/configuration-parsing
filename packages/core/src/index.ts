@@ -8,5 +8,6 @@ export * from './ConfigurationLoading/LoadableConfiguration'
 export * from './ConfigurationLoading/ConfigurationLoaders'
 
 export * from './ComposeExtensions/CacheableConfigurationFactory'
+export * from './ComposeExtensions/MapLoaderOptionConfigurationFactory'
 
 export * from './Compose'
