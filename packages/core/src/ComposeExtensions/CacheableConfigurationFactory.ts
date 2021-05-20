@@ -1,4 +1,5 @@
 import {ComposedConfigurationFactory} from '../Compose'
+import {CreateConfigurationFactory} from './EncapsulationBuilder'
 
 type GetCurrentTime = () => Date
 export type CacheableConfigurationFactoryOptions = { reloadEvery: TimeInterval }
@@ -33,9 +34,9 @@ export const createCacheableConfigurationFactory = <TConfiguration, TLoaderOptio
      getCurrentTime: GetCurrentTime = () => new Date()): ComposedConfigurationFactory<TConfiguration, TLoaderOptions> =>
         new CacheableConfigurationFactory(innerFactory, options, getCurrentTime)
 
-export const cacheConfigurationFactory = <TConfiguration, TLoaderOptions> (options: CacheableConfigurationFactoryOptions) =>
+export const cacheConfiguration = <TConfiguration, TLoaderOptions> (options: CacheableConfigurationFactoryOptions): CreateConfigurationFactory<TConfiguration, TLoaderOptions, TConfiguration, TLoaderOptions> =>
     (innerFactory: ComposedConfigurationFactory<TConfiguration, TLoaderOptions>) =>
-        createCacheableConfigurationFactory.bind(undefined, innerFactory, options)
+        createCacheableConfigurationFactory(innerFactory, options)
 
 export class TimeInterval {
     private constructor(private readonly ms: number) {}
