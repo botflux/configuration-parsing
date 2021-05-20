@@ -33,6 +33,10 @@ export const createCacheableConfigurationFactory = <TConfiguration, TLoaderOptio
      getCurrentTime: GetCurrentTime = () => new Date()): ComposedConfigurationFactory<TConfiguration, TLoaderOptions> =>
         new CacheableConfigurationFactory(innerFactory, options, getCurrentTime)
 
+export const cacheConfigurationFactory = <TConfiguration, TLoaderOptions> (options: CacheableConfigurationFactoryOptions) =>
+    (innerFactory: ComposedConfigurationFactory<TConfiguration, TLoaderOptions>) =>
+        createCacheableConfigurationFactory.bind(undefined, innerFactory, options)
+
 export class TimeInterval {
     private constructor(private readonly ms: number) {}
 
