@@ -34,7 +34,9 @@ There is also at the root of this package a set of helpers that will compose tho
 Loading a configuration formatted in json from file system. The configuration is validated using a joi schema.
 
 ```typescript
-import {parsers, loaders, validators, fromLoadable} from 'configuration-parsing'
+import {parsers, loaders, validators, fromLoadable} from '@configuration-parsing/core'
+import {joiConfigurationValidator} from '@configuration-parsing/validator-joi'
+import Joi from 'joi'
 
 type MyConfiguration = { hello: { db: string } }
 
@@ -47,7 +49,7 @@ const jsonParser = parsers.json()
 
 // Validatable are able to validate parsed piece of configuration.
 // Run `npm i @configuration-parsing/validator-joi` to use the joi validator.
-const validator = validators.joi<MyConfiguration>(Joi.object({
+const validator = joiConfigurationValidator<MyConfiguration>(Joi.object({
     hello: Joi.object({
         db: Joi.string()
     })
@@ -58,7 +60,7 @@ const configurationFactory = fromLoadable<MyConfiguration>(fileLoader)
     .parsingWith(parser)
     .validatingWith(validator)
 
-const configuration: MyConfiguration = await configurationFactory.create({ location: 'testing/configuration.json' })
+const configuration: MyConfiguration = await configurationFactory.create({location: 'testing/configuration.json'})
 ```
 
 ### Another usage
@@ -68,15 +70,18 @@ component. The `ParsedLoadableConfiguration` helps you load an already parsed co
 
 ```typescript
 import Joi from 'joi'
-import {loaders, validators, fromParsedLoadable} from 'configuration-parsing'
+import {loaders, validators, fromParsedLoadable} from '@configuration-parsing/core'
+import {joiConfigurationValidator} from '@configuration-parsing/validator-joi'
 
 type Configuration = { API_KEY: string }
 
 // ParsedLoadable can load already parsed configuration.
 // (process.env is injected as a default parameter)
 const parsedLoader = loaders.env()
-const validator = validators.joi(Joi.object({
-    API_KEY: Joi.string()
+const validator = joiConfigurationValidator<MyConfiguration>(Joi.object({
+    hello: Joi.object({
+        db: Joi.string()
+    })
 }))
 
 const configurationFactory = fromParsedLoadable<ProcessEnv, Configuration>(parsedLoader)
@@ -93,7 +98,7 @@ To find the parser that fits the given configuration, each parser's `supports` m
 is supported by the parser then the configuration gets parsed.
 
 ```typescript
-import {parsers} from 'configuration-parsing'
+import {parsers} from '@configuration-parsing/core'
 
 const rawJson = `{ "hello": "world" }`
 const rawYaml = `hello: world`
@@ -108,7 +113,14 @@ const parsedYaml = yamlAndJsonParsers.parse(rawYaml)
 
 ```typescript
 import Joi from 'joi'
-import { TimeInterval, parsers, loaders, validators, fromLoadable, createCacheableConfigurationFactory } from 'configuration-parsing'
+import {
+    TimeInterval,
+    parsers,
+    loaders,
+    fromLoadable,
+    createCacheableConfigurationFactory
+} from '@configuration-parsing/core'
+import {joiConfigurationValidator} from '@configuration-parsing/validator-joi'
 
 type MyConfiguration = { hello: { db: string } }
 
@@ -120,7 +132,7 @@ const fileLoader = loaders.file()
 const jsonParser = parsers.json()
 
 // Validatable are able to validate parsed piece of configuration.
-const validator = validators.joi<MyConfiguration>(Joi.object({
+const validator = joiConfigurationValidator<MyConfiguration>(Joi.object({
     hello: Joi.object({
         db: Joi.string()
     })
@@ -133,13 +145,13 @@ const configurationFactory = fromLoadable<MyConfiguration>(fileLoader)
 
 const cacheableConfigurationFactory = createCacheableConfigurationFactory(
     configurationFactory,
-    { reloadEvery: TimeInterval.minutes(5) }
+    {reloadEvery: TimeInterval.minutes(5)}
 )
 
 // Will load the configuration the first and cache it
 // until the reload time was passed.
-const configuration: MyConfiguration = await cacheableConfigurationFactory.create({ 
-    location: 'testing/configuration.json' 
+const configuration: MyConfiguration = await cacheableConfigurationFactory.create({
+    location: 'testing/configuration.json'
 })
 
 ```
@@ -157,7 +169,7 @@ Here is the file loader as an example:
 
 ```typescript
 import fs from 'fs'
-import {ConfigurationLoadingError, LoadableConfiguration} from 'configuration-parsing'
+import {ConfigurationLoadingError, LoadableConfiguration} from '@configuration-parsing/core'
 
 export type FileLoaderOptions = {
     fileLocation: string,
