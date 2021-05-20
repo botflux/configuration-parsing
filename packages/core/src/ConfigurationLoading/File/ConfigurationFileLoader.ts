@@ -19,7 +19,7 @@ class ConfigurationFileLoader implements LoadableConfiguration<FileLoaderOptions
         if (!this.dependencies.exists(options.fileLocation)) {
             return Promise.reject(new ConfigurationLoadingError(
                 `Something went wrong while loading a configuration file. ` +
-                `The file at ${options.fileLocation} doesn't exist. Are you this is the correct path?`,
+                `The file at ${options.fileLocation} doesn't exist. Are you sure this is the correct path?`,
                 ConfigurationFileLoader.name
             ))
         }

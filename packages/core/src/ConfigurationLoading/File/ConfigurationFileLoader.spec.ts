@@ -29,7 +29,7 @@ describe('ConfigurationFileLoader', function () {
         // Assert
         await expect(promise).rejects.toEqual(new ConfigurationLoadingError(
             `Something went wrong while loading a configuration file. ` +
-            `The file at a-file-that-does-not-exists.txt doesn't exist. Are you this is the correct path?`,
+            `The file at a-file-that-does-not-exists.txt doesn't exist. Are you sure this is the correct path?`,
             loaderName
         ))
     })
