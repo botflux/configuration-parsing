@@ -20,6 +20,7 @@ module.exports = {
                     "/guide/",
                     "/guide/installation.md",
                     "/guide/usages.md",
+                    "/guide/augment-configuration-factory.md",
                     "/guide/write-a-loader.md",
                     "/guide/write-a-parser.md",
                     "/guide/write-a-validator.md",

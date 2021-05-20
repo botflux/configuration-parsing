@@ -1,6 +1,6 @@
 import {ComposedConfigurationFactory} from '../Compose'
 import {mapLoaderOptions} from './MapLoaderOptionConfigurationFactory'
-import {createPipeBuilder} from './EncapsulationBuilder'
+import {createEncapsulationBuilder} from './EncapsulationBuilder'
 
 type MyConfiguration = { hello: string }
 type AnotherConfiguration = { foo: string }
@@ -17,8 +17,8 @@ describe('encapsulate factory with other factories', function () {
         const factory = new FakeConfigurationFactory()
 
         // Act
-        const encapsulateFactory = createPipeBuilder(factory)
-            .pipe(mapLoaderOptions((o: AnotherConfiguration) => ({ hello: o.foo })))
+        const encapsulateFactory = createEncapsulationBuilder(factory)
+            .encapsulate(mapLoaderOptions((o: AnotherConfiguration) => ({ hello: o.foo })))
             .build()
 
         const configuration = await encapsulateFactory.create({ foo: 'world' })

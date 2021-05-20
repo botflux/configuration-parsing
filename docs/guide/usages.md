@@ -134,25 +134,3 @@ const factory =
 
 const configuration = await factory.create(process.env)
 ```
-
-## Caching configuration
-
-If you want to reload the configuration for each request coming you will slow your application.
-To solve that issue you can use a `ComposedConfigurationFactory` implementation:
-
-```typescript
-import {fromLoadable, loaders, parsers, validators, createCacheableConfigurationFactory, TimeInterval} from '@configuration-parsing/core'
-
-const factory = 
-    fromLoadable(loaders.file())
-        .parsingWith(parsers.json())
-        .validatingWith(validators.empty())
-
-const cachedFactory = createCacheableConfigurationFactory(factory, {
-    reloadEvery: TimeInterval.minutes(2).and(TimeInterval.seconds(30))
-})
-
-const configuration = await cachedFactory.create({ 
-    location: 'my-config.json' 
-})
-```
