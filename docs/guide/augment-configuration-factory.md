@@ -23,3 +23,25 @@ const configuration = await cachedFactory.create({
     location: 'my-config.json' 
 })
 ```
+
+## Adapt loader options
+
+```typescript
+import {fromLoadable, loaders, parsers, validators, createEncapsulationBuilder, TimeInterval, mapLoaderOptions} from '@configuration-parsing/core'
+import {joiConfigurationValidator} from '@configuration-parsing/validator-joi'
+
+type Configuration = { foo: string }
+
+export const customerConfigurationFactory =
+    createEncapsulationBuilder(
+        fromLoadable<Configuration, FileLoaderOptions>(loaders.file())
+            .parsingWith(parsers.json())
+            .validatingWith(joiConfigurationValidator(customerConfigurationSchema)
+        )
+    )
+        .encapsulate(mapLoaderOptions(options => ({ fileLocation: `config/${options}.json` })))
+        .build()
+
+// will load `config/hello.json`
+const configuration = await customerConfigurationFactory.create('hello')
+```
