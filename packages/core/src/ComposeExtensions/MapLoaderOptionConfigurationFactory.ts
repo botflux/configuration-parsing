@@ -1,6 +1,6 @@
 import {ComposedConfigurationFactory} from '../Compose'
 
-type MapLoaderOptions<TLoaderOptions, TNewLoaderOptions> = (options: TNewLoaderOptions) => TLoaderOptions
+export type MapLoaderOptions<TLoaderOptions, TNewLoaderOptions> = (options: TNewLoaderOptions) => TLoaderOptions
 
 class MapLoaderOptionsConfigurationFactory<TConfiguration, TLoaderOptions, TNewLoaderOptions> implements ComposedConfigurationFactory<TConfiguration, TNewLoaderOptions> {
     constructor(
