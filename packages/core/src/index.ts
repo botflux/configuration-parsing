@@ -11,4 +11,7 @@ export * from './ComposeExtensions/CacheableConfigurationFactory'
 export * from './ComposeExtensions/MapLoaderOptionConfigurationFactory'
 export * from './ComposeExtensions/EncapsulationBuilder'
 
+export * from './ComposeExtensions/MapConfigurationFactoryResult'
+export * from './ComposeExtensions/MergeBuilder'
+
 export * from './Compose'
