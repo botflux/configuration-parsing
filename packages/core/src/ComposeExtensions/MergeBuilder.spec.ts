@@ -83,14 +83,15 @@ describe('merge configuration from multiple sources', function () {
         const mergedFactory = createMergeBuilder()
             .merge(factory1, {
                 mapConfiguration: configuration => ({ foo: configuration }),
-
+                mapLoaderOptions: (options: { foo: MyConfigurationOptions }) => options.foo
             })
             .merge(factory2, {
-                mapConfiguration: (configuration) => ({ bar: configuration })
+                mapConfiguration: (configuration) => ({ bar: configuration }),
+                mapLoaderOptions: (options: { world: MyConfigurationOptions2 }) => options.world
             })
             .build()
 
-        const configuration = await mergedFactory.create({ baseUrl1: 'http://dev.dev', baseUrl2: 'https://a.b' })
+        const configuration = await mergedFactory.create({ foo: { baseUrl1: 'http://dev.dev' }, world: { baseUrl2: 'https://a.b' } })
 
         // Assert
         expect(configuration).toEqual({

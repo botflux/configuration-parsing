@@ -76,3 +76,47 @@ export const databaseUriFactory =
 
 const uri = await databaseUriFactory.create({ fileLocation: 'config/my-db.json' })
 ```
+
+## Merge multiples configuration factories
+
+You can merge configuration coming from multiples sources. You can use a `MergeBuilder` implementation
+to do so. 
+
+```typescript
+import {fromLoadable, loaders, parsers, validators, FileLoaderOptions, createMergeBuilder} from '@configuration-parsing/core'
+
+type CacheConfiguration = {
+    expiresAfter: number,
+    fileLocation: string
+}
+
+type AuthConfiguration = {
+    login: string
+    password: string
+    serviceUrl: string
+}
+
+const cacheConfigurationFactory = fromLoadable(loaders.file())
+    .parsingWith(parsers.json())
+    .validatingWith(validators.empty())
+
+const authConfigurationFactory = fromLoadable(loaders.file())
+    .parsingWith(parsers.json())
+    .validatingWith(validators.empty())
+
+const mergedConfigurationFactory = createMergeBuilder()
+    .merge(authConfigurationFactory, {
+        mapConfiguration: config => ({ auth: config }),
+        mapLoader: (options: { auth: FileLoaderOptions }) => options.auth
+    })
+    .merge(cacheConfigurationFactory, {
+        mapConfiguration: config => ({ cache: config }),
+        mapLoader: (options: { cache: FileLoaderOptions }) => options.cache
+    })
+    .build()
+
+const mergedConfiguration = await mergedConfigurationFactory.create({
+    auth: { fileLocation: 'config/auth.json' },
+    cache: { fileLocation: 'config/cache.json' }
+})
+```
