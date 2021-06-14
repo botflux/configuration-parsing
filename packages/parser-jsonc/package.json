@@ -1,6 +1,6 @@
 {
   "name": "@configuration-parsing/parser-jsonc",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Toml parser for configuration-parsing/core",
   "keywords": [
     "toml",
