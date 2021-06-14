@@ -16,5 +16,36 @@ You can find packages extending the feature of `@configuration-parsing/core` suc
 ```shell
 npm install --save @configuration-parsing/parser-toml
 npm install --save @configuration-parsing/parser-yaml
+npm install --save @configuration-parsing/parser-jsonc
 npm install --save @configuration-parsing/validator-joi
+```
+
+## Available parsers
+
+### Json
+
+Shipped in `@configuration-parsing/core`.
+
+### Toml
+
+[npmjs.org](https://www.npmjs.com/package/@configuration-parsing/parser-toml)
+
+```shell
+npm install --save @configuration-parsing/parser-toml
+```
+
+### Yaml
+
+[npmjs.org](https://www.npmjs.com/package/@configuration-parsing/parser-yaml)
+
+```shell
+npm install --save @configuration-parsing/parser-yaml
+```
+
+### Jsonc
+
+[npmjs.org](https://www.npmjs.com/package/@configuration-parsing/parser-jsonc)
+
+```shell
+npm install --save @configuration-parsing/parser-jsonc
 ```
