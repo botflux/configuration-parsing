@@ -21,7 +21,7 @@ export interface MergeBuilder<TConfiguration, TLoaderOptions> {
     merge<TNewConfiguration, TNewLoaderOptions, TMappedConfiguration, TMappedLoaderOptions>(
         factory: ComposedConfigurationFactory<TNewConfiguration, TNewLoaderOptions>,
         options?: Partial<MergeOptions<TNewConfiguration, TMappedConfiguration, TNewLoaderOptions, TMappedLoaderOptions>>):
-        MergeBuilder<TMappedConfiguration & TConfiguration, TMappedLoaderOptions & TLoaderOptions>
+        MergeBuilder<(unknown extends TMappedConfiguration ? TNewConfiguration : TMappedConfiguration)  & TConfiguration, (unknown extends TMappedLoaderOptions ? TNewLoaderOptions : TMappedLoaderOptions) & TLoaderOptions>
 
     /**
      * Create the merged configuration factory.
@@ -56,7 +56,7 @@ class MergeBuilderImpl<TConfiguration, TLoaderOptions> implements MergeBuilder<T
     merge<TNewConfiguration, TNewLoaderOptions, TMappedConfiguration, TMappedLoaderOptions>(
         factory: ComposedConfigurationFactory<TNewConfiguration, TNewLoaderOptions>,
         options: Partial<MergeOptions<TNewConfiguration, TMappedConfiguration, TNewLoaderOptions, TMappedLoaderOptions>> = defaultMergeOptions
-    ): MergeBuilder<TMappedConfiguration & TConfiguration, TMappedLoaderOptions & TLoaderOptions> {
+    ): MergeBuilder<(unknown extends TMappedConfiguration ? TNewConfiguration : TMappedConfiguration) & TConfiguration, (unknown extends TMappedLoaderOptions ? TNewLoaderOptions : TMappedLoaderOptions) & TLoaderOptions> {
         const { mapConfiguration = defaultMergeOptions.mapConfiguration, mapLoaderOptions = defaultMergeOptions.mapLoaderOptions } = options
 
         const mappedFactory = createEncapsulationBuilder(factory)

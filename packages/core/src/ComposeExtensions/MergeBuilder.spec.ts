@@ -103,4 +103,14 @@ describe('merge configuration from multiple sources', function () {
             }
         })
     })
+
+    it('should map configuration options even when', function () {
+        // Arrange
+
+
+        // Act
+
+
+        // Assert
+    })
 })
