@@ -1,9 +1,0 @@
-testing
-src
-node_modules
-.travis.yml
-jest.config.js
-README.md
-tsconfig.json
-.gitignore
-.idea
