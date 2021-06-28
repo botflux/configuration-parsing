@@ -10,7 +10,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage:text": "jest --coverage",
-    "test:coverage:coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "test:coverage:coveralls": "jest --coverage --coverageReporters=text-lcov --no-cache | coveralls",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
