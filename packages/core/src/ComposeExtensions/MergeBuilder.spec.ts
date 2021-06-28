@@ -104,13 +104,27 @@ describe('merge configuration from multiple sources', function () {
         })
     })
 
-    it('should map configuration options even when', function () {
+    it('should map configuration options even if we use the same configuration loader options', async function () {
         // Arrange
-
+        const factory1 = new FakeConfigurationFactory()
+        const factory2 = new FakeConfigurationFactory2()
 
         // Act
+        const mergedFactory = createMergeBuilder()
+            .merge(factory1, {
+                mapLoaderOptions: (options: { a: MyConfigurationOptions }) => options.a,
+            })
+            .merge(factory2, {
+                mapLoaderOptions: (options: { b: MyConfigurationOptions2 }) => options.b,
+            })
+            .build()
 
+        const configuration = await mergedFactory.create({ a: {baseUrl1: 'a'}, b: {  baseUrl2: 'b' } })
 
         // Assert
+        expect(configuration).toEqual({
+            anotherServiceUrl: 'a/foo/bar',
+            someServiceUrl: 'b/hello/world'
+        })
     })
 })

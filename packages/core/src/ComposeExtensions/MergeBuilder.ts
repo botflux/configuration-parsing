@@ -21,7 +21,10 @@ export interface MergeBuilder<TConfiguration, TLoaderOptions> {
     merge<TNewConfiguration, TNewLoaderOptions, TMappedConfiguration, TMappedLoaderOptions>(
         factory: ComposedConfigurationFactory<TNewConfiguration, TNewLoaderOptions>,
         options?: Partial<MergeOptions<TNewConfiguration, TMappedConfiguration, TNewLoaderOptions, TMappedLoaderOptions>>):
-        MergeBuilder<(unknown extends TMappedConfiguration ? TNewConfiguration : TMappedConfiguration)  & TConfiguration, (unknown extends TMappedLoaderOptions ? TNewLoaderOptions : TMappedLoaderOptions) & TLoaderOptions>
+        MergeBuilder<
+            (unknown extends TMappedConfiguration ? TNewConfiguration : TMappedConfiguration) & TConfiguration,
+            (unknown extends TMappedLoaderOptions ? TNewLoaderOptions : TMappedLoaderOptions) & TLoaderOptions
+        >
 
     /**
      * Create the merged configuration factory.
