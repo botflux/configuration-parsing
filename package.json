@@ -6,7 +6,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
-    "test:alt": "lerna run test",
+    "test:alt": "lerna run test -- no-cache",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage:text": "jest --coverage",
