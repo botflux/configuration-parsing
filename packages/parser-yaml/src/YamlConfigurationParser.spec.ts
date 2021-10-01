@@ -27,7 +27,7 @@ describe('YamlConfigurationParser', function () {
         // Assert
         expect(shouldThrow).toThrow(
             `Something went wrong while parsing a yaml configuration. ` +
-            `Are you that the configuration can be parsed?`)
+            `Are you sure that the configuration can be parsed?`)
         expect(supports).toBe(false)
     })
 })

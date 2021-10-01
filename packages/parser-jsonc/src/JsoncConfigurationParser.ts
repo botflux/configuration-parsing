@@ -10,8 +10,8 @@ class JsoncConfigurationParser implements ParsableConfiguration {
             return jsonc.parse(rawConfiguration, this.parsingOptions)
         } catch (error) {
             throw new ConfigurationParsingError(
-                `Something went wrong while parsing the toml configuration. ` +
-                `Are you that the configuration can be parsed? `,
+                `Something went wrong while parsing the jsonc configuration. ` +
+                `Are you sure that the configuration can be parsed? `,
                 JsoncConfigurationParser.name,
                 error
             )
