@@ -1,6 +1,6 @@
 {
   "name": "@configuration-parsing/core",
-  "version": "0.8.3",
+  "version": "0.8.4-alpha.1",
   "description": "Core features of configuration-parsing",
   "keywords": [
     "core",
