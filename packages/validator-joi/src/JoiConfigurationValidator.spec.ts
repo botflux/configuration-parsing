@@ -33,4 +33,22 @@ describe('JoiConfigurationValidation', function () {
             validatorName
         ))
     })
+
+    it('should allow passing joi validation options', async function () {
+        // Arrange
+        const validator = joiConfigurationValidator(Joi.object({
+            field: Joi.string()
+        }), {
+            allowUnknown: true
+        })
+
+        // Act
+        const promise = validator.validate({ field: 'hello', foo: 'bar' })
+
+        // Assert
+        await expect(promise).resolves.toEqual({
+            field: 'hello',
+            foo: 'bar'
+        })
+    })
 })
