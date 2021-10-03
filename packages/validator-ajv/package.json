@@ -1,0 +1,30 @@
+{
+  "name": "validator-ajv",
+  "version": "0.8.4-alpha.2",
+  "description": "Ajv validator for @configuration-parsing/core",
+  "keywords": [
+    "ajv",
+    "configuration"
+  ],
+  "author": "Victor Mendele <v-mendele@logitud.fr>",
+  "homepage": "https://github.com/botflux/configuration-parsing/tree/main/packages/validator-ajv#readme",
+  "license": "MIT",
+  "main": "build/AjvConfigurationValidator.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/botflux/configuration-parsing.git"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "test": "jest",
+    "test:coverage": "jest --coverage --coverageReporters=json",
+    "prepublishOnly": "npm run build"
+  },
+  "bugs": {
+    "url": "https://github.com/botflux/configuration-parsing/issues"
+  },
+  "dependencies": {
+    "@configuration-parsing/core": "^0.8.4-alpha.1",
+    "ajv": "^8.6.3"
+  }
+}
