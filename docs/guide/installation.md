@@ -18,6 +18,7 @@ npm install --save @configuration-parsing/parser-toml
 npm install --save @configuration-parsing/parser-yaml
 npm install --save @configuration-parsing/parser-jsonc
 npm install --save @configuration-parsing/validator-joi
+npm install --save @configuration-parsing/validator-ajv
 ```
 
 ## Available parsers
@@ -28,7 +29,7 @@ Shipped in `@configuration-parsing/core`.
 
 ### Toml
 
-[npmjs.org](https://www.npmjs.com/package/@configuration-parsing/parser-toml)
+[npmjs.com](https://www.npmjs.com/package/@configuration-parsing/parser-toml)
 
 ```shell
 npm install --save @configuration-parsing/parser-toml
@@ -36,7 +37,7 @@ npm install --save @configuration-parsing/parser-toml
 
 ### Yaml
 
-[npmjs.org](https://www.npmjs.com/package/@configuration-parsing/parser-yaml)
+[npmjs.com](https://www.npmjs.com/package/@configuration-parsing/parser-yaml)
 
 ```shell
 npm install --save @configuration-parsing/parser-yaml
@@ -44,8 +45,27 @@ npm install --save @configuration-parsing/parser-yaml
 
 ### Jsonc
 
-[npmjs.org](https://www.npmjs.com/package/@configuration-parsing/parser-jsonc)
+[npmjs.com](https://www.npmjs.com/package/@configuration-parsing/parser-jsonc)
 
 ```shell
 npm install --save @configuration-parsing/parser-jsonc
 ```
+
+## Available validators
+
+### Joi
+
+[npmjs.com](https://www.npmjs.com/package/@configuration-parsing/validator-joi)
+
+```shell
+npm install --save @configuration-parsing/validator-joi
+```
+
+### Ajv
+
+[npmjs.com](https://www.npmjs.com/package/@configuration-parsing/validator-ajv)
+
+```shell
+npm install --save @configuration-parsing/validator-ajv
+```
+

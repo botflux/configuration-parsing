@@ -12,19 +12,40 @@ module.exports = {
         displayAllHeaders: true,
         sidebar: [
             {
-                title: "Guide",
-                path: "/guide/",
-                collapsable: false,
-                sidebarDepth: 2,
-                children: [
-                    "/guide/",
-                    "/guide/installation.md",
-                    "/guide/usages.md",
-                    "/guide/augment-configuration-factory.md",
-                    "/guide/write-a-loader.md",
-                    "/guide/write-a-parser.md",
-                    "/guide/write-a-validator.md",
-                ]
+                title: "Installation",
+                path: "/guide/installation.md",
+                collapsable: true,
+                sidebarDepth: 1,
+            },
+            {
+                title: "Usages",
+                path: "/guide/usages.md",
+                collapsable: true,
+                sidebarDepth: 1,
+            },
+            {
+                title: "Augment configuration factory",
+                path: "/guide/augment-configuration-factory.md",
+                collapsable: true,
+                sidebarDepth: 1,
+            },
+            {
+                title: "Write a configuration loader",
+                path: '/guide/write-a-loader.md',
+                collapsable: true,
+                sidebarDepth: 1
+            },
+            {
+                title: "Write a configuration parser",
+                path: '/guide/write-a-parser.md',
+                collapsable: true,
+                sidebarDepth: 1
+            },
+            {
+                title: "Write a configuration validator",
+                path: '/guide/write-a-validator.md',
+                collapsable: true,
+                sidebarDepth: 1
             }
         ]
     },
